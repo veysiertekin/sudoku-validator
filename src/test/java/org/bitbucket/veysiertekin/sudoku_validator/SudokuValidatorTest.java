@@ -1,6 +1,7 @@
 package org.bitbucket.veysiertekin.sudoku_validator;
 
 
+import org.bitbucket.veysiertekin.sudoku_validator.validation.ColumnValidationCommand;
 import org.bitbucket.veysiertekin.sudoku_validator.validation.InputFormatValidationCommand;
 import org.bitbucket.veysiertekin.sudoku_validator.validation.RowValidationCommand;
 import org.junit.jupiter.api.DisplayName;
@@ -21,6 +22,7 @@ public class SudokuValidatorTest {
         boolean result = new SudokuValidator()
                 .addValidator(new InputFormatValidationCommand())
                 .addValidator(new RowValidationCommand())
+                .addValidator(new ColumnValidationCommand())
                 .validateAll(input);
         assertThat(result)
                 .isEqualTo(expectedResult);
