@@ -31,7 +31,7 @@ public class SudokuSolver {
                     continue;
 
                 for (var value : possibleValues) {
-                    if (canValueBeInsertedToIndex(input, value, rowIndex, columnIndex)) {
+                    if (canValueBeInsertedToEmptyIndex(input, value, rowIndex, columnIndex)) {
                         input[rowIndex][columnIndex] = value;
                         var result = solveValidInput(input);
                         if (result.isPresent()) {
@@ -53,21 +53,21 @@ public class SudokuSolver {
         return Optional.empty();
     }
 
-    private boolean canValueBeInsertedToIndex(Integer[][] input, Integer value, int rowIndex, int columnIndex) {
-        var boxRow = calculateBoxIndex(rowIndex);
-        var boxColumn = calculateBoxIndex(columnIndex);
-
-        return !boxContains(input, value, boxRow, boxColumn)
-                && !rowContains(input, value, rowIndex)
-                && !columnContains(input, value, columnIndex);
-    }
-
     private boolean boardCompleted(Integer[][] input) {
         for (Integer[] integers : input)
             for (Integer integer : integers)
                 if (integer == null)
                     return false;
         return true;
+    }
+
+    public boolean canValueBeInsertedToEmptyIndex(Integer[][] input, Integer value, int rowIndex, int columnIndex) {
+        var boxRow = calculateBoxIndex(rowIndex);
+        var boxColumn = calculateBoxIndex(columnIndex);
+
+        return !boxContains(input, value, boxRow, boxColumn)
+                && !rowContains(input, value, rowIndex)
+                && !columnContains(input, value, columnIndex);
     }
 
     private boolean rowContains(final Integer[][] input, Integer value, Integer rowIndex) {

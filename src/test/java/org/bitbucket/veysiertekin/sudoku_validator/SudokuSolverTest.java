@@ -11,25 +11,19 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class SudokuSolverTest {
+
     @ParameterizedTest
     @DisplayName("Given input, When it is valid, Then it should return true")
-    @MethodSource("validInput")
+    @MethodSource("inputs")
     void checkInputFormat(Integer[][] input, Optional<Integer[][]> expectedResult) {
         Optional<Integer[][]> result = new SudokuSolver().solve(input);
         assertThat(result.isPresent()).isEqualTo(expectedResult.isPresent());
         if (result.isPresent() && expectedResult.isPresent()) {
-            var rows = result.get();
-            var expectedRows = expectedResult.get();
-
-            for (int i = 0; i < rows.length; i++) {
-                assertThat(rows[i])
-                        .as("row: " + i)
-                        .isEqualTo(expectedRows[i]);
-            }
+            assertNested(result.get(), expectedResult.get());
         }
     }
 
-    static Stream<Arguments> validInput() {
+    static Stream<Arguments> inputs() {
         return Stream.of(
                 // Invalid input; duplicated '3' at third box
                 Arguments.of(new Integer[][]{
@@ -57,5 +51,50 @@ class SudokuSolverTest {
                 }, Optional.of(CommonTestConstants.VALID_BOARD_RESULT)),
                 Arguments.of(CommonTestConstants.VALID_BOARD, Optional.of(CommonTestConstants.VALID_BOARD_RESULT))
         );
+    }
+
+    @ParameterizedTest
+    @DisplayName("Given index, When it can be added, Then it should return true")
+    @MethodSource("indexAvailabilityInput")
+    void checkIndexAvailability(Integer[][] input, Integer value, Integer row, Integer column, Boolean expectedResult) {
+        boolean result = new SudokuSolver().canValueBeInsertedToEmptyIndex(input, value, row, column);
+        assertThat(result).isEqualTo(expectedResult);
+    }
+
+    static Stream<Arguments> indexAvailabilityInput() {
+        return Stream.of(
+                // Box contains
+                Arguments.of(new Integer[][]{
+                        new Integer[]{5, 3, null},
+                        new Integer[]{6, 7, 2},
+                        new Integer[]{1, 9, 8}
+                }, 3, 1, 1, false),
+                // Row contains
+                Arguments.of(new Integer[][]{
+                        new Integer[]{5, 3, 4, 6, 7, 8, 9, 1, null},
+                        new Integer[]{6, 7, 2, 1, 9, 5, 3, null, 8},
+                        new Integer[]{1, 9, 8, 3, 4, 2, null, 6, 7}
+                }, 3, 0, 8, false),
+                // Column contains
+                Arguments.of(new Integer[][]{
+                        new Integer[]{5, 3, 4, 6, null, 8, 9, 1, null},
+                        new Integer[]{6, 7, 2, 1, 9, 5, 3, null, 8},
+                        new Integer[]{1, 9, 8, 3, 4, 2, null, 6, 7}
+                }, 7, 0, 8, false),
+                // Valid input for the index
+                Arguments.of(new Integer[][]{
+                        new Integer[]{5, 3, 4, 6, null, 8, 9, 1, null},
+                        new Integer[]{6, 7, 2, 1, 9, 5, 3, null, 8},
+                        new Integer[]{1, 9, 8, 3, 4, 2, null, 6, 7}
+                }, 2, 0, 8, true)
+        );
+    }
+
+    private void assertNested(Integer[][] rows, Integer[][] expectedRows) {
+        for (int i = 0; i < rows.length; i++) {
+            assertThat(rows[i])
+                    .as("row: " + i)
+                    .isEqualTo(expectedRows[i]);
+        }
     }
 }
