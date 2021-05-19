@@ -19,11 +19,7 @@ public class SudokuValidatorTest {
     @DisplayName("Given input, When it is valid, Then it should return true")
     @MethodSource("validInput")
     void checkInputFormat(List<List<Integer>> input, Boolean expectedResult) {
-        boolean result = new SudokuValidator()
-                .addValidator(new InputFormatValidationCommand())
-                .addValidator(new RowValidationCommand())
-                .addValidator(new ColumnValidationCommand())
-                .validateAll(input);
+        boolean result = new SudokuValidator().validateAll(input);
         assertThat(result)
                 .isEqualTo(expectedResult);
     }
