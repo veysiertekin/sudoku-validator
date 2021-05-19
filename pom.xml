@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.bitbucket.veysiertekin</groupId>
+    <artifactId>sudoku-validator</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <name>Sudoku Validator</name>
+    <url>https://bitbucket.org/veysiertekin/sudoku-validator</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Test dependencies -->
+        <junit-bom.version>5.7.2</junit-bom.version>
+
+        <!-- Target artifact dependencies -->
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
+
+        <!-- Compiler plugins -->
+        <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
+        <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
+        <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>${junit-bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${maven-jar-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>
