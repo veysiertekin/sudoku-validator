@@ -16,7 +16,7 @@ public class SudokuValidator {
         this.validators.add(new BoxValidationCommand());
     }
 
-    public boolean validateAll(final Integer[][] input) {
+    public boolean isBoardValid(final Integer[][] input) {
         return validators.stream().allMatch(v -> v.validate(input));
     }
 }

@@ -11,9 +11,17 @@ import java.util.stream.IntStream;
 import static org.bitbucket.veysiertekin.sudoku_validator.CommonConstants.BOARD_DIMENSION;
 
 public class SudokuSolver {
-    private final List<Integer> possibleValues = IntStream.range(1, BOARD_DIMENSION + 1).boxed().collect(Collectors.toList());
+    private final SudokuValidator sudokuValidator = new SudokuValidator();
+
+    private final List<Integer> possibleValues = IntStream.range(1, BOARD_DIMENSION + 1)
+            .boxed().collect(Collectors.toList());
 
     public Optional<Integer[][]> solve(final Integer[][] input) {
+        return !sudokuValidator.isBoardValid(input) ?
+                Optional.empty() : solveValidInput(input);
+    }
+
+    private Optional<Integer[][]> solveValidInput(final Integer[][] input) {
         if (boardCompleted(input)) {
             return Optional.of(input);
         }
@@ -21,15 +29,11 @@ public class SudokuSolver {
             for (int columnIndex = 0; columnIndex < BOARD_DIMENSION; columnIndex++) {
                 if (input[rowIndex][columnIndex] != null)
                     continue;
-                var boxRow = calculateBoxIndex(rowIndex);
-                var boxColumn = calculateBoxIndex(columnIndex);
 
                 for (var value : possibleValues) {
-                    if (!boxContains(input, value, boxRow, boxColumn)
-                            && !rowContains(input, value, rowIndex)
-                            && !columnContains(input, value, columnIndex)) {
+                    if (canValueBeInsertedToIndex(input, value, rowIndex, columnIndex)) {
                         input[rowIndex][columnIndex] = value;
-                        var result = solve(input);
+                        var result = solveValidInput(input);
                         if (result.isPresent()) {
                             return result;
                         }
@@ -37,11 +41,25 @@ public class SudokuSolver {
                     }
                 }
                 // If an index is empty, but non of the possible
-                // values match we can skip these branches
+                // values match, we can skip these branches
                 return Optional.empty();
             }
         }
+        /*
+         * Since this method has been designed to be used after
+         * {@link SudokuValidator#validateAll(Integer[][])} method,
+         * It is impossible to get here because of the early exits in the function
+         */
         return Optional.empty();
+    }
+
+    private boolean canValueBeInsertedToIndex(Integer[][] input, Integer value, int rowIndex, int columnIndex) {
+        var boxRow = calculateBoxIndex(rowIndex);
+        var boxColumn = calculateBoxIndex(columnIndex);
+
+        return !boxContains(input, value, boxRow, boxColumn)
+                && !rowContains(input, value, rowIndex)
+                && !columnContains(input, value, columnIndex);
     }
 
     private boolean boardCompleted(Integer[][] input) {
