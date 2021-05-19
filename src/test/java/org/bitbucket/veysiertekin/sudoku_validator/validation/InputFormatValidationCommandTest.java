@@ -42,7 +42,19 @@ class InputFormatValidationCommandTest {
                         new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9},
                         new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9},
                         new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9}
-                }, true)
+                }, true),
+                // Invalid because of negative value in the full-size board
+                Arguments.of(new Integer[][]{
+                        new Integer[]{null, -1, 2, 3, 4, 5, 6, 7, 9},
+                        new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9},
+                        new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9},
+                        new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9},
+                        new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9},
+                        new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9},
+                        new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9},
+                        new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9},
+                        new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9}
+                }, false)
         );
     }
 }
