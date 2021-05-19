@@ -1,31 +1,33 @@
 package org.bitbucket.veysiertekin.sudoku_validator.validation;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
 public class InputFormatValidator {
-    private static final int BOARD_SIZE = 81;
+    private static final int DIMENSION = 9;
     private static final Integer EMPTY_FIELD = null;
 
     private static final int MIN_VAL = 1;
     private static final int MAX_VAL = 9;
 
-    public boolean validate(final List<Integer> input) {
-        return checkNonEmpty(input)
-                && checkNumericValue(input)
-                && checkSize(input);
+    public boolean validate(final List<List<Integer>> input) {
+        return checkNestedSize(input)
+                && checkNumericValue(input);
     }
 
-    private boolean checkNonEmpty(final List<Integer> input) {
-        return input != null && !input.isEmpty();
+    private boolean checkNestedSize(final List<List<Integer>> input) {
+        return checkSize(input)
+                && input.stream().allMatch(InputFormatValidator::checkSize);
     }
 
-    private boolean checkNumericValue(final List<Integer> input) {
+    private boolean checkNumericValue(final List<List<Integer>> input) {
         return input.stream()
+                .flatMap(Collection::stream)
                 .noneMatch(n -> !Objects.equals(n, EMPTY_FIELD) && (n < MIN_VAL || n > MAX_VAL));
     }
 
-    private boolean checkSize(final List<Integer> input) {
-        return input.size() == BOARD_SIZE;
+    private static boolean checkSize(final List<?> input) {
+        return input != null && input.size() == DIMENSION;
     }
 }

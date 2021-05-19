@@ -17,7 +17,7 @@ class InputFormatValidatorTest {
     @ParameterizedTest
     @DisplayName("Given input format, When it is invalid, Then it should return false")
     @MethodSource("invalidFormattedInput")
-    void checkInputFormat(List<Integer> input, Boolean expectedResult) {
+    void checkInputFormat(List<List<Integer>> input, Boolean expectedResult) {
         boolean result = new InputFormatValidator().validate(input);
         assertThat(result)
                 .isEqualTo(expectedResult);
@@ -30,21 +30,21 @@ class InputFormatValidatorTest {
                 // Empty
                 Arguments.of(Collections.emptyList(), false),
                 // Invalid numeric range
-                Arguments.of(Collections.singletonList(0), false),
-                Arguments.of(Collections.singletonList(10), false),
+                Arguments.of(Collections.singletonList(Collections.singletonList(0)), false),
+                Arguments.of(Collections.singletonList(Collections.singletonList(10)), false),
                 // Invalid size
-                Arguments.of(Collections.singletonList(1), false),
+                Arguments.of(Collections.singletonList(Collections.singletonList(1)), false),
                 // Valid formatted input, null for empty fields
                 Arguments.of(Arrays.asList(
-                        null, 1, 2, 3, 4, 5, 6, 7, 9,
-                        null, 1, 2, 3, 4, 5, 6, 7, 9,
-                        null, 1, 2, 3, 4, 5, 6, 7, 9,
-                        null, 1, 2, 3, 4, 5, 6, 7, 9,
-                        null, 1, 2, 3, 4, 5, 6, 7, 9,
-                        null, 1, 2, 3, 4, 5, 6, 7, 9,
-                        null, 1, 2, 3, 4, 5, 6, 7, 9,
-                        null, 1, 2, 3, 4, 5, 6, 7, 9,
-                        null, 1, 2, 3, 4, 5, 6, 7, 9
+                        Arrays.asList(null, 1, 2, 3, 4, 5, 6, 7, 9),
+                        Arrays.asList(null, 1, 2, 3, 4, 5, 6, 7, 9),
+                        Arrays.asList(null, 1, 2, 3, 4, 5, 6, 7, 9),
+                        Arrays.asList(null, 1, 2, 3, 4, 5, 6, 7, 9),
+                        Arrays.asList(null, 1, 2, 3, 4, 5, 6, 7, 9),
+                        Arrays.asList(null, 1, 2, 3, 4, 5, 6, 7, 9),
+                        Arrays.asList(null, 1, 2, 3, 4, 5, 6, 7, 9),
+                        Arrays.asList(null, 1, 2, 3, 4, 5, 6, 7, 9),
+                        Arrays.asList(null, 1, 2, 3, 4, 5, 6, 7, 9)
                 ), true)
         );
     }

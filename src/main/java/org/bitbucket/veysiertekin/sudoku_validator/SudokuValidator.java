@@ -7,7 +7,7 @@ import java.util.List;
 public class SudokuValidator {
     private final InputFormatValidator formatValidator = new InputFormatValidator();
 
-    public boolean validate(final List<Integer> input) {
+    public boolean validate(final List<List<Integer>> input) {
         return formatValidator.validate(input);
     }
 }
