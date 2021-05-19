@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-public class InputFormatValidator {
+public class InputFormatValidationCommand implements ValidationCommand {
     private static final int DIMENSION = 9;
     private static final Integer EMPTY_FIELD = null;
 
@@ -18,7 +18,7 @@ public class InputFormatValidator {
 
     private boolean checkNestedSize(final List<List<Integer>> input) {
         return checkSize(input)
-                && input.stream().allMatch(InputFormatValidator::checkSize);
+                && input.stream().allMatch(InputFormatValidationCommand::checkSize);
     }
 
     private boolean checkNumericValue(final List<List<Integer>> input) {

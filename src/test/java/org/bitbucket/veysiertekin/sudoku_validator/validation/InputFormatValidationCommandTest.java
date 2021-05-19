@@ -12,13 +12,13 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class InputFormatValidatorTest {
+class InputFormatValidationCommandTest {
 
     @ParameterizedTest
     @DisplayName("Given input format, When it is invalid, Then it should return false")
     @MethodSource("inputs")
     void checkInputFormat(List<List<Integer>> input, Boolean expectedResult) {
-        boolean result = new InputFormatValidator().validate(input);
+        boolean result = new InputFormatValidationCommand().validate(input);
         assertThat(result)
                 .isEqualTo(expectedResult);
     }
