@@ -36,6 +36,9 @@ public class SudokuSolver {
                         input[rowIndex][columnIndex] = null;
                     }
                 }
+                // If an index is empty, but non of the possible
+                // values match we can skip these branches
+                return Optional.empty();
             }
         }
         return Optional.empty();

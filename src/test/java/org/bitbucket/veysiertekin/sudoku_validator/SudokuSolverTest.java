@@ -17,9 +17,16 @@ class SudokuSolverTest {
     void checkInputFormat(Integer[][] input, Optional<Integer[][]> expectedResult) {
         Optional<Integer[][]> result = new SudokuSolver().solve(input);
         assertThat(result.isPresent()).isEqualTo(expectedResult.isPresent());
-        if (result.isPresent() && expectedResult.isPresent())
-            assertThat(result.get())
-                    .hasSameDimensionsAs(expectedResult.get());
+        if (result.isPresent() && expectedResult.isPresent()) {
+            var rows = result.get();
+            var expectedRows = expectedResult.get();
+
+            for (int i = 0; i < rows.length; i++) {
+                assertThat(rows[i])
+                        .as("row: " + i)
+                        .isEqualTo(expectedRows[i]);
+            }
+        }
     }
 
     static Stream<Arguments> validInput() {
@@ -35,7 +42,8 @@ class SudokuSolverTest {
                         new Integer[]{9, 6, null, 5, 3, 7, 2, 8, 4},
                         new Integer[]{2, null, 7, 4, 1, 9, 6, 3, 5},
                         new Integer[]{null, 4, 5, 2, 8, 6, 1, 7, 9}
-                }, Optional.of(CommonTestConstants.VALID_BOARD_RESULT))
+                }, Optional.of(CommonTestConstants.VALID_BOARD_RESULT)),
+                Arguments.of(CommonTestConstants.VALID_BOARD, Optional.of(CommonTestConstants.VALID_BOARD_RESULT))
         );
     }
 }
