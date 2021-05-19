@@ -1,6 +1,8 @@
 package org.bitbucket.veysiertekin.sudoku_validator;
 
 
+import org.bitbucket.veysiertekin.sudoku_validator.validation.InputFormatValidationCommand;
+import org.bitbucket.veysiertekin.sudoku_validator.validation.RowValidationCommand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -16,7 +18,10 @@ public class SudokuValidatorTest {
     @DisplayName("Given input, When it is valid, Then it should return true")
     @MethodSource("validInput")
     void checkInputFormat(List<List<Integer>> input, Boolean expectedResult) {
-        boolean result = new SudokuValidator().validate(input);
+        boolean result = new SudokuValidator()
+                .addValidator(new InputFormatValidationCommand())
+                .addValidator(new RowValidationCommand())
+                .validateAll(input);
         assertThat(result)
                 .isEqualTo(expectedResult);
     }

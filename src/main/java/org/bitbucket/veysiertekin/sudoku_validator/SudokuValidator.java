@@ -1,13 +1,19 @@
 package org.bitbucket.veysiertekin.sudoku_validator;
 
-import org.bitbucket.veysiertekin.sudoku_validator.validation.InputFormatValidationCommand;
+import org.bitbucket.veysiertekin.sudoku_validator.validation.ValidationCommand;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SudokuValidator {
-    private final InputFormatValidationCommand formatValidator = new InputFormatValidationCommand();
+    private final List<ValidationCommand> validators = new ArrayList<>();
 
-    public boolean validate(final List<List<Integer>> input) {
-        return formatValidator.validate(input);
+    public boolean validateAll(final List<List<Integer>> input) {
+        return validators.stream().allMatch(v -> v.validate(input));
+    }
+
+    public SudokuValidator addValidator(final ValidationCommand validator) {
+        validators.add(validator);
+        return this;
     }
 }
