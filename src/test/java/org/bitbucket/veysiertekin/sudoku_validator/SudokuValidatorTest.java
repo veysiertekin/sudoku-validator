@@ -6,6 +6,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -14,17 +16,37 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SudokuValidatorTest {
 
     @ParameterizedTest
-    @DisplayName("Given input, When it is invalid, Then should return false")
-    @MethodSource("invalidInput")
-    void invalidFormattedInput_ShouldReturnFalse(List<Integer> input, Boolean expectedResult) {
+    @DisplayName("Given input format, When it is invalid, Then it should return false")
+    @MethodSource("invalidFormattedInput")
+    void checkInputFormat(List<Integer> input, Boolean expectedResult) {
         boolean result = new SudokuValidator().validate(input);
         assertThat(result)
                 .isEqualTo(expectedResult);
     }
 
-    static Stream<Arguments> invalidInput() {
+    static Stream<Arguments> invalidFormattedInput() {
         return Stream.of(
-                Arguments.of(null, false)
+                // Null
+                Arguments.of(null, false),
+                // Empty
+                Arguments.of(Collections.emptyList(), false),
+                // Invalid numeric range
+                Arguments.of(Collections.singletonList(0), false),
+                Arguments.of(Collections.singletonList(10), false),
+                // Invalid size
+                Arguments.of(Collections.singletonList(1), false),
+                // Valid formatted input, null for empty fields
+                Arguments.of(Arrays.asList(
+                        null, 1, 2, 3, 4, 5, 6, 7, 9,
+                        null, 1, 2, 3, 4, 5, 6, 7, 9,
+                        null, 1, 2, 3, 4, 5, 6, 7, 9,
+                        null, 1, 2, 3, 4, 5, 6, 7, 9,
+                        null, 1, 2, 3, 4, 5, 6, 7, 9,
+                        null, 1, 2, 3, 4, 5, 6, 7, 9,
+                        null, 1, 2, 3, 4, 5, 6, 7, 9,
+                        null, 1, 2, 3, 4, 5, 6, 7, 9,
+                        null, 1, 2, 3, 4, 5, 6, 7, 9
+                ), true)
         );
     }
 }
