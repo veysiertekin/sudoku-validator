@@ -12,10 +12,10 @@ public class ColumnValidationCommand implements ValidationCommand {
     @Override
     public boolean validate(List<List<Integer>> input) {
         return IntStream.range(0, BOARD_DIMENSION)
-                .allMatch(columnIndex -> ListUtils.checkValuesNotRepeatedExceptNulls(getColumnList(input, columnIndex)));
+                .allMatch(columnIndex -> ListUtils.checkValuesNotRepeatedExceptNulls(getWholeColumn(input, columnIndex)));
     }
 
-    private List<Integer> getColumnList(final List<List<Integer>> input, final Integer columnIndex) {
+    private List<Integer> getWholeColumn(final List<List<Integer>> input, final Integer columnIndex) {
         return input.stream().map(row -> row.get(columnIndex)).collect(Collectors.toList());
     }
 }
