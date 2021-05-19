@@ -31,13 +31,6 @@ class ArrayUtilsTest {
     }
 
     @Test
-    void copy() {
-        var list = new Integer[][]{{null, 1, 1, 3}};
-        Integer[][] result = ArrayUtils.copy(list);
-        assertThat(result).isEqualTo(list);
-    }
-
-    @Test
     void contains() {
         var input = new Integer[]{1, 2, 3};
         var expected = 1;

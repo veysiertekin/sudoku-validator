@@ -1,10 +1,9 @@
 package org.bitbucket.veysiertekin.sudoku_validator;
 
 import org.bitbucket.veysiertekin.sudoku_validator.utils.ArrayUtils;
-import org.bitbucket.veysiertekin.sudoku_validator.validation.BoxValidationCommand;
-import org.bitbucket.veysiertekin.sudoku_validator.validation.ColumnValidationCommand;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -12,9 +11,6 @@ import java.util.stream.IntStream;
 import static org.bitbucket.veysiertekin.sudoku_validator.CommonConstants.BOARD_DIMENSION;
 
 public class SudokuSolver {
-    private final BoxValidationCommand boxValidator = new BoxValidationCommand();
-    private final ColumnValidationCommand columnValidator = new ColumnValidationCommand();
-
     private final List<Integer> possibleValues = IntStream.range(1, BOARD_DIMENSION + 1).boxed().collect(Collectors.toList());
 
     public Optional<Integer[][]> solve(final Integer[][] input) {
@@ -27,18 +23,17 @@ public class SudokuSolver {
                     continue;
                 var boxRow = calculateBoxIndex(rowIndex);
                 var boxColumn = calculateBoxIndex(columnIndex);
-                var box = boxValidator.extractBox(input, boxRow, boxColumn);
-                var row = input[rowIndex];
-                var column = columnValidator.getWholeColumn(input, columnIndex);
 
                 for (var value : possibleValues) {
-                    if (!ArrayUtils.contains(box, value) && !ArrayUtils.contains(row, value) && !ArrayUtils.contains(column, value)) {
-                        var boardCopy = ArrayUtils.copy(input);
-                        boardCopy[rowIndex][columnIndex] = value;
-                        var result = solve(boardCopy);
+                    if (!boxContains(input, value, boxRow, boxColumn)
+                            && !rowContains(input, value, rowIndex)
+                            && !columnContains(input, value, columnIndex)) {
+                        input[rowIndex][columnIndex] = value;
+                        var result = solve(input);
                         if (result.isPresent()) {
                             return result;
                         }
+                        input[rowIndex][columnIndex] = null;
                     }
                 }
             }
@@ -52,6 +47,29 @@ public class SudokuSolver {
                 if (integer == null)
                     return false;
         return true;
+    }
+
+    private boolean rowContains(final Integer[][] input, Integer value, Integer rowIndex) {
+        return ArrayUtils.contains(input[rowIndex], value);
+    }
+
+    private boolean columnContains(Integer[][] input, Integer value, int columnIndex) {
+        for (Integer[] integers : input) {
+            if (Objects.equals(integers[columnIndex], value)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean boxContains(final Integer[][] input, Integer value, Integer rowIndex, Integer columnIndex) {
+        for (int row = rowIndex * 3; row < rowIndex * 3 + 3; row++) {
+            for (int column = columnIndex * 3; column < columnIndex * 3 + 3; column++) {
+                if (Objects.equals(input[row][column], value))
+                    return true;
+            }
+        }
+        return false;
     }
 
     private Integer calculateBoxIndex(int index) {

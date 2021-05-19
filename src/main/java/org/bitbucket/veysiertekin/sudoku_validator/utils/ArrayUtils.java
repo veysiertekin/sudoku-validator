@@ -15,11 +15,4 @@ public class ArrayUtils {
         return Arrays.stream(integers).filter(Objects::nonNull).count()
                 == Arrays.stream(integers).filter(Objects::nonNull).distinct().count();
     }
-
-    public static Integer[][] copy(final Integer[][] input) {
-        var result = new Integer[input.length][input.length > 0 ? input[0].length : 0];
-        for (int i = 0; i < input.length; i++)
-            result[i] = Arrays.copyOf(input[i], input[i].length);
-        return result;
-    }
 }
