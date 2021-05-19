@@ -16,14 +16,14 @@ class InputFormatValidatorTest {
 
     @ParameterizedTest
     @DisplayName("Given input format, When it is invalid, Then it should return false")
-    @MethodSource("invalidFormattedInput")
+    @MethodSource("inputs")
     void checkInputFormat(List<List<Integer>> input, Boolean expectedResult) {
         boolean result = new InputFormatValidator().validate(input);
         assertThat(result)
                 .isEqualTo(expectedResult);
     }
 
-    static Stream<Arguments> invalidFormattedInput() {
+    static Stream<Arguments> inputs() {
         return Stream.of(
                 // Null
                 Arguments.of(null, false),
