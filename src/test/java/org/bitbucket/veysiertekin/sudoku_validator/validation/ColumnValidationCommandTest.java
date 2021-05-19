@@ -13,12 +13,12 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RowValidationCommandTest {
+class ColumnValidationCommandTest {
     @ParameterizedTest
-    @DisplayName("Given sudoku board, When it abides by the row rules, Then it should return true")
+    @DisplayName("Given sudoku board, When it abides by the column rules, Then it should return true")
     @MethodSource("inputs")
     void checkInputFormat(List<List<Integer>> input, Boolean expectedResult) {
-        boolean result = new RowValidationCommand().validate(input);
+        boolean result = new ColumnValidationCommand().validate(input);
         assertThat(result)
                 .isEqualTo(expectedResult);
     }
@@ -26,7 +26,17 @@ class RowValidationCommandTest {
     static Stream<Arguments> inputs() {
         return Stream.of(
                 // Repeated value
-                Arguments.of(Collections.singletonList(Arrays.asList(null, 1, 1, 3, 4, 5, 6, 7, 9)), false),
+                Arguments.of(Arrays.asList(
+                        Collections.singletonList(null),
+                        Collections.singletonList(1),
+                        Collections.singletonList(1),
+                        Collections.singletonList(2),
+                        Collections.singletonList(3),
+                        Collections.singletonList(4),
+                        Collections.singletonList(5),
+                        Collections.singletonList(6),
+                        Collections.singletonList(7)
+                ), false),
                 // Valid
                 Arguments.of(CommonTestConstants.VALID_BOARD, true)
         );

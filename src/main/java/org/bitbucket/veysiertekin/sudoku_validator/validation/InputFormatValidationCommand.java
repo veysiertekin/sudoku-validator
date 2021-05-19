@@ -4,8 +4,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
+import static org.bitbucket.veysiertekin.sudoku_validator.CommonConstants.BOARD_DIMENSION;
+
 public class InputFormatValidationCommand implements ValidationCommand {
-    private static final int DIMENSION = 9;
     private static final Integer EMPTY_FIELD = null;
 
     private static final int MIN_VAL = 1;
@@ -28,6 +29,6 @@ public class InputFormatValidationCommand implements ValidationCommand {
     }
 
     private static boolean checkSize(final List<?> input) {
-        return input != null && input.size() == DIMENSION;
+        return input != null && input.size() == BOARD_DIMENSION;
     }
 }
