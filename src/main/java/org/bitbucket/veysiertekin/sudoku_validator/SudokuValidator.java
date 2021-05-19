@@ -1,9 +1,6 @@
 package org.bitbucket.veysiertekin.sudoku_validator;
 
-import org.bitbucket.veysiertekin.sudoku_validator.validation.ColumnValidationCommand;
-import org.bitbucket.veysiertekin.sudoku_validator.validation.InputFormatValidationCommand;
-import org.bitbucket.veysiertekin.sudoku_validator.validation.RowValidationCommand;
-import org.bitbucket.veysiertekin.sudoku_validator.validation.ValidationCommand;
+import org.bitbucket.veysiertekin.sudoku_validator.validation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +13,7 @@ public class SudokuValidator {
         this.validators.add(new InputFormatValidationCommand());
         this.validators.add(new RowValidationCommand());
         this.validators.add(new ColumnValidationCommand());
+        this.validators.add(new BoxValidationCommand());
     }
 
     public boolean validateAll(final List<List<Integer>> input) {
