@@ -1,21 +1,25 @@
 package org.bitbucket.veysiertekin.sudoku_validator.validation;
 
-import org.bitbucket.veysiertekin.sudoku_validator.utils.ListUtils;
+import org.bitbucket.veysiertekin.sudoku_validator.utils.ArrayUtils;
 
-import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.bitbucket.veysiertekin.sudoku_validator.CommonConstants.BOARD_DIMENSION;
 
 public class ColumnValidationCommand implements ValidationCommand {
     @Override
-    public boolean validate(List<List<Integer>> input) {
+    public boolean validate(Integer[][] input) {
         return IntStream.range(0, BOARD_DIMENSION)
-                .allMatch(columnIndex -> ListUtils.checkValuesNotRepeatedExceptNulls(getWholeColumn(input, columnIndex)));
+                .allMatch(columnIndex -> ArrayUtils.checkValuesNotRepeatedExceptNulls(getWholeColumn(input, columnIndex)));
     }
 
-    public List<Integer> getWholeColumn(final List<List<Integer>> input, final Integer columnIndex) {
-        return input.stream().map(row -> row.get(columnIndex)).collect(Collectors.toList());
+    public Integer[] getWholeColumn(final Integer[][] input, final Integer columnIndex) {
+        var columnData = new Integer[BOARD_DIMENSION];
+        var columnDataCursor = 0;
+        for (var row : input) {
+            columnData[columnDataCursor] = row[columnIndex];
+            columnDataCursor++;
+        }
+        return columnData;
     }
 }

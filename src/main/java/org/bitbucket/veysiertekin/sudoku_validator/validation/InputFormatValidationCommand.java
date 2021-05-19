@@ -1,7 +1,6 @@
 package org.bitbucket.veysiertekin.sudoku_validator.validation;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Objects;
 
 import static org.bitbucket.veysiertekin.sudoku_validator.CommonConstants.BOARD_DIMENSION;
@@ -12,23 +11,32 @@ public class InputFormatValidationCommand implements ValidationCommand {
     private static final int MIN_VAL = 1;
     private static final int MAX_VAL = 9;
 
-    public boolean validate(final List<List<Integer>> input) {
+    public boolean validate(final Integer[][] input) {
         return checkNestedSize(input)
                 && checkNumericValue(input);
     }
 
-    private boolean checkNestedSize(final List<List<Integer>> input) {
+    private boolean checkNestedSize(final Integer[][] input) {
         return checkSize(input)
-                && input.stream().allMatch(InputFormatValidationCommand::checkSize);
+                && Arrays.stream(input).allMatch(InputFormatValidationCommand::checkSize);
     }
 
-    private boolean checkNumericValue(final List<List<Integer>> input) {
-        return input.stream()
-                .flatMap(Collection::stream)
-                .noneMatch(n -> !Objects.equals(n, EMPTY_FIELD) && (n < MIN_VAL || n > MAX_VAL));
+    private boolean checkNumericValue(final Integer[][] input) {
+        for (var row : input) {
+            for (var element : row) {
+                if (!Objects.equals(element, EMPTY_FIELD) && (element < MIN_VAL || element > MAX_VAL)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
-    private static boolean checkSize(final List<?> input) {
-        return input != null && input.size() == BOARD_DIMENSION;
+    private static boolean checkSize(final Integer[][] input) {
+        return input != null && input.length == BOARD_DIMENSION;
+    }
+
+    private static boolean checkSize(final Integer[] input) {
+        return input != null && input.length == BOARD_DIMENSION;
     }
 }

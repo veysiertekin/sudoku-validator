@@ -5,9 +5,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,7 +14,7 @@ class InputFormatValidationCommandTest {
     @ParameterizedTest
     @DisplayName("Given input format, When it is invalid, Then it should return false")
     @MethodSource("inputs")
-    void checkInputFormat(List<List<Integer>> input, Boolean expectedResult) {
+    void checkInputFormat(Integer[][] input, Boolean expectedResult) {
         boolean result = new InputFormatValidationCommand().validate(input);
         assertThat(result)
                 .isEqualTo(expectedResult);
@@ -28,24 +25,24 @@ class InputFormatValidationCommandTest {
                 // Null
                 Arguments.of(null, false),
                 // Empty
-                Arguments.of(Collections.emptyList(), false),
+                Arguments.of(new Integer[][]{}, false),
                 // Invalid numeric range
-                Arguments.of(Collections.singletonList(Collections.singletonList(0)), false),
-                Arguments.of(Collections.singletonList(Collections.singletonList(10)), false),
+                Arguments.of(new Integer[][]{{0}}, false),
+                Arguments.of(new Integer[][]{{10}}, false),
                 // Invalid size
-                Arguments.of(Collections.singletonList(Collections.singletonList(1)), false),
+                Arguments.of(new Integer[][]{{1}}, false),
                 // Valid formatted input, null for empty fields
-                Arguments.of(Arrays.asList(
-                        Arrays.asList(null, 1, 2, 3, 4, 5, 6, 7, 9),
-                        Arrays.asList(null, 1, 2, 3, 4, 5, 6, 7, 9),
-                        Arrays.asList(null, 1, 2, 3, 4, 5, 6, 7, 9),
-                        Arrays.asList(null, 1, 2, 3, 4, 5, 6, 7, 9),
-                        Arrays.asList(null, 1, 2, 3, 4, 5, 6, 7, 9),
-                        Arrays.asList(null, 1, 2, 3, 4, 5, 6, 7, 9),
-                        Arrays.asList(null, 1, 2, 3, 4, 5, 6, 7, 9),
-                        Arrays.asList(null, 1, 2, 3, 4, 5, 6, 7, 9),
-                        Arrays.asList(null, 1, 2, 3, 4, 5, 6, 7, 9)
-                ), true)
+                Arguments.of(new Integer[][]{
+                        new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9},
+                        new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9},
+                        new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9},
+                        new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9},
+                        new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9},
+                        new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9},
+                        new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9},
+                        new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9},
+                        new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9}
+                }, true)
         );
     }
 }

@@ -6,7 +6,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,7 +14,7 @@ public class SudokuValidatorTest {
     @ParameterizedTest
     @DisplayName("Given input, When it is valid, Then it should return true")
     @MethodSource("validInput")
-    void checkInputFormat(List<List<Integer>> input, Boolean expectedResult) {
+    void checkInputFormat(Integer[][] input, Boolean expectedResult) {
         boolean result = new SudokuValidator().validateAll(input);
         assertThat(result)
                 .isEqualTo(expectedResult);
