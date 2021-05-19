@@ -15,7 +15,7 @@ public class ColumnValidationCommand implements ValidationCommand {
                 .allMatch(columnIndex -> ListUtils.checkValuesNotRepeatedExceptNulls(getWholeColumn(input, columnIndex)));
     }
 
-    private List<Integer> getWholeColumn(final List<List<Integer>> input, final Integer columnIndex) {
+    public List<Integer> getWholeColumn(final List<List<Integer>> input, final Integer columnIndex) {
         return input.stream().map(row -> row.get(columnIndex)).collect(Collectors.toList());
     }
 }

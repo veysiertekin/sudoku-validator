@@ -2,11 +2,13 @@ package org.bitbucket.veysiertekin.sudoku_validator.utils;
 
 import org.bitbucket.veysiertekin.sudoku_validator.CommonTestConstants;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -20,6 +22,13 @@ class ListUtilsTest {
         boolean result = ListUtils.checkValuesNotRepeatedExceptNulls(input);
         assertThat(result)
                 .isEqualTo(expectedResult);
+    }
+
+    @Test
+    void listCopy() {
+        var list = Collections.singletonList(Arrays.asList(null, 1, 1, 3));
+        List<List<Integer>> result = ListUtils.copy(list);
+        assertThat(result).isEqualTo(list);
     }
 
     static Stream<Arguments> inputs() {

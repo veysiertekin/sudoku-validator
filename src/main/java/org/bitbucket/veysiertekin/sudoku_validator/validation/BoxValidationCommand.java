@@ -13,17 +13,19 @@ public class BoxValidationCommand implements ValidationCommand {
     public boolean validate(List<List<Integer>> input) {
         for (int rowIndex = 0; rowIndex < BOARD_DIMENSION / 3; rowIndex++) {
             for (int columnIndex = 0; columnIndex < BOARD_DIMENSION / 3; columnIndex++) {
-                int column = columnIndex;
-                var box = input.subList(rowIndex * 3, rowIndex * 3 + 3)
-                        .stream()
-                        .map(row -> row.subList(column * 3, column * 3 + 3))
-                        .flatMap(Collection::stream)
-                        .collect(Collectors.toList());
-
+                var box = extractBox(input, rowIndex, columnIndex);
                 if (!ListUtils.checkValuesNotRepeatedExceptNulls(box))
                     return false;
             }
         }
         return true;
+    }
+
+    public List<Integer> extractBox(final List<List<Integer>> input, int rowIndex, int columnIndex) {
+        return input.subList(rowIndex * 3, rowIndex * 3 + 3)
+                .stream()
+                .map(row -> row.subList(columnIndex * 3, columnIndex * 3 + 3))
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
     }
 }
