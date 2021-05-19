@@ -24,7 +24,8 @@ public class SudokuValidatorTest {
     static Stream<Arguments> validInput() {
         return Stream.of(
                 // Valid input
-                Arguments.of(CommonTestConstants.VALID_BOARD, true)
+                Arguments.of(CommonTestConstants.VALID_BOARD, true),
+                Arguments.of(CommonTestConstants.VALID_BOARD_RESULT, true)
         );
     }
 }
