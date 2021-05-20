@@ -14,8 +14,8 @@ class RowValidationCommandTest {
     @ParameterizedTest
     @DisplayName("Given sudoku board, When it abides by the row rules, Then it should return true")
     @MethodSource("inputs")
-    void checkInputFormat(Integer[][] input, Boolean expectedResult) {
-        boolean result = new RowValidationCommand().validate(input);
+    void checkInputFormat(final Integer[][] input, final Boolean expectedResult) {
+        final boolean result = new RowValidationCommand().validate(input);
         assertThat(result)
                 .isEqualTo(expectedResult);
     }
@@ -25,7 +25,7 @@ class RowValidationCommandTest {
                 // Repeated value
                 Arguments.of(new Integer[][]{new Integer[]{null, 1, 1, 3, 4, 5, 6, 7, 9}}, false),
                 // Valid
-                Arguments.of(CommonTestConstants.VALID_BOARD, true)
+                Arguments.of(CommonTestConstants.VALID_BOARD_SAMPLE, true)
         );
     }
 }

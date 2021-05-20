@@ -14,8 +14,8 @@ class InputFormatValidationCommandTest {
     @ParameterizedTest
     @DisplayName("Given input format, When it is invalid, Then it should return false")
     @MethodSource("inputs")
-    void checkInputFormat(Integer[][] input, Boolean expectedResult) {
-        boolean result = new InputFormatValidationCommand().validate(input);
+    void checkInputFormat(final Integer[][] input, final Boolean expectedResult) {
+        final boolean result = new InputFormatValidationCommand().validate(input);
         assertThat(result)
                 .isEqualTo(expectedResult);
     }

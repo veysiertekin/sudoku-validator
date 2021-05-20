@@ -10,7 +10,7 @@ public class ColumnValidationCommand implements ValidationCommand {
     @Override
     public boolean validate(Integer[][] input) {
         return IntStream.range(0, BOARD_DIMENSION)
-                .allMatch(columnIndex -> ArrayUtils.checkValuesNotRepeatedExceptNulls(getWholeColumn(input, columnIndex)));
+                .allMatch(columnIndex -> ArrayUtils.containsDistinctValuesExceptNulls(getWholeColumn(input, columnIndex)));
     }
 
     public Integer[] getWholeColumn(final Integer[][] input, final Integer columnIndex) {

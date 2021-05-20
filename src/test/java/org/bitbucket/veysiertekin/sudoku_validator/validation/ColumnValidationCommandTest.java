@@ -14,8 +14,8 @@ class ColumnValidationCommandTest {
     @ParameterizedTest
     @DisplayName("Given sudoku board, When it abides by the column rules, Then it should return true")
     @MethodSource("inputs")
-    void checkInputFormat(Integer[][] input, Boolean expectedResult) {
-        boolean result = new ColumnValidationCommand().validate(input);
+    void checkInputFormat(final Integer[][] input, final Boolean expectedResult) {
+        final boolean result = new ColumnValidationCommand().validate(input);
         assertThat(result)
                 .isEqualTo(expectedResult);
     }
@@ -35,7 +35,7 @@ class ColumnValidationCommandTest {
                         new Integer[]{7}
                 }, false),
                 // Valid
-                Arguments.of(CommonTestConstants.VALID_BOARD, true)
+                Arguments.of(CommonTestConstants.VALID_BOARD_SAMPLE, true)
         );
     }
 }

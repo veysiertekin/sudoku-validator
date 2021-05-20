@@ -11,12 +11,12 @@ public final class CommonTestConstants {
      * 4, _, _ | 8, _, 3 | _, _, 1
      * 7, _, _ | _, 2, _ | _, _, 6
      * ---------------------------
-     * -, 6, _ | _, _, _ | 2, 8, _
-     * -, _, _ | 4, 1, 9 | _, _, 5
-     * -, _, _ | _, 8, _ | _, 7, 9
+     * _, 6, _ | _, _, _ | 2, 8, _
+     * _, _, _ | 4, 1, 9 | _, _, 5
+     * _, _, _ | _, 8, _ | _, 7, 9
      * </pre>
      */
-    public static Integer[][] VALID_BOARD = new Integer[][]{
+    public static Integer[][] VALID_BOARD_SAMPLE = new Integer[][]{
             new Integer[]{5, 3, null, null, 7, null, null, null, null},
             new Integer[]{6, null, null, 1, 9, 5, null, null, null},
             new Integer[]{null, 9, 8, null, null, null, null, 6, null},

@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.bitbucket.veysiertekin.sudoku_validator.CommonConstants.BOARD_DIMENSION;
+import static org.bitbucket.veysiertekin.sudoku_validator.CommonConstants.EMPTY_FIELD;
 
 public class SudokuSolver {
     private final SudokuValidator sudokuValidator = new SudokuValidator();
@@ -27,7 +28,7 @@ public class SudokuSolver {
         }
         for (int rowIndex = 0; rowIndex < BOARD_DIMENSION; rowIndex++) {
             for (int columnIndex = 0; columnIndex < BOARD_DIMENSION; columnIndex++) {
-                if (input[rowIndex][columnIndex] != null)
+                if (!Objects.equals(input[rowIndex][columnIndex], EMPTY_FIELD))
                     continue;
 
                 for (var value : possibleValues) {
@@ -37,7 +38,7 @@ public class SudokuSolver {
                         if (result.isPresent()) {
                             return result;
                         }
-                        input[rowIndex][columnIndex] = null;
+                        input[rowIndex][columnIndex] = EMPTY_FIELD;
                     }
                 }
                 // If an index is empty, but non of the possible
@@ -56,7 +57,7 @@ public class SudokuSolver {
     private boolean boardCompleted(Integer[][] input) {
         for (Integer[] integers : input)
             for (Integer integer : integers)
-                if (integer == null)
+                if (Objects.equals(integer, EMPTY_FIELD))
                     return false;
         return true;
     }
@@ -75,21 +76,17 @@ public class SudokuSolver {
     }
 
     private boolean columnContains(Integer[][] input, Integer value, int columnIndex) {
-        for (Integer[] integers : input) {
-            if (Objects.equals(integers[columnIndex], value)) {
+        for (Integer[] integers : input)
+            if (Objects.equals(integers[columnIndex], value))
                 return true;
-            }
-        }
         return false;
     }
 
     private boolean boxContains(final Integer[][] input, Integer value, Integer rowIndex, Integer columnIndex) {
-        for (int row = rowIndex * 3; row < rowIndex * 3 + 3; row++) {
-            for (int column = columnIndex * 3; column < columnIndex * 3 + 3; column++) {
+        for (int row = rowIndex * 3; row < rowIndex * 3 + 3; row++)
+            for (int column = columnIndex * 3; column < columnIndex * 3 + 3; column++)
                 if (Objects.equals(input[row][column], value))
                     return true;
-            }
-        }
         return false;
     }
 

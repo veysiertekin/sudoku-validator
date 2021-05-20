@@ -10,7 +10,7 @@ public class BoxValidationCommand implements ValidationCommand {
         for (int rowIndex = 0; rowIndex < BOARD_DIMENSION / 3; rowIndex++) {
             for (int columnIndex = 0; columnIndex < BOARD_DIMENSION / 3; columnIndex++) {
                 var box = extractBox(input, rowIndex, columnIndex);
-                if (!ArrayUtils.checkValuesNotRepeatedExceptNulls(box))
+                if (!ArrayUtils.containsDistinctValuesExceptNulls(box))
                     return false;
             }
         }
