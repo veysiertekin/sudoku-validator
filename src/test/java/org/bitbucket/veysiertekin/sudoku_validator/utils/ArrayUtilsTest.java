@@ -38,4 +38,11 @@ class ArrayUtilsTest {
         assertThat(ArrayUtils.contains(input, expected)).isTrue();
         assertThat(ArrayUtils.contains(input, notExpected)).isFalse();
     }
+
+    @Test
+    void arrayCopy() {
+        var input = new Integer[][]{{0}};
+        var copy = ArrayUtils.copy(input);
+        assertThat(copy).isEqualTo(copy);
+    }
 }

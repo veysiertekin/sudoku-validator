@@ -17,7 +17,8 @@ class CsvLoaderTest {
         final var testFile = "src/test/resources/data/01-valid-input.csv";
         var lines = new CsvLoader(testFile).load();
         for (int i = 0; i < CommonTestConstants.VALID_BOARD_SAMPLE.length; i++) {
-            assertThat(lines[i]).isEqualTo(CommonTestConstants.VALID_BOARD_SAMPLE[i]);
+            assertThat(lines[i])
+                    .isEqualTo(CommonTestConstants.VALID_BOARD_SAMPLE[i]);
         }
     }
 

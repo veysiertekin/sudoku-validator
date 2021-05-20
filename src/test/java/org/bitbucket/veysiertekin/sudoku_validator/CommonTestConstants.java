@@ -16,7 +16,7 @@ public final class CommonTestConstants {
      * _, _, _ | _, 8, _ | _, 7, 9
      * </pre>
      */
-    public static Integer[][] VALID_BOARD_SAMPLE = new Integer[][]{
+    public final static Integer[][] VALID_BOARD_SAMPLE = new Integer[][]{
             new Integer[]{5, 3, null, null, 7, null, null, null, null},
             new Integer[]{6, null, null, 1, 9, 5, null, null, null},
             new Integer[]{null, 9, 8, null, null, null, null, 6, null},
@@ -28,7 +28,7 @@ public final class CommonTestConstants {
             new Integer[]{null, null, null, null, 8, null, null, 7, 9}
     };
 
-    public static Integer[][] VALID_BOARD_RESULT = new Integer[][]{
+    public final static Integer[][] VALID_BOARD_RESULT = new Integer[][]{
             new Integer[]{5, 3, 4, 6, 7, 8, 9, 1, 2},
             new Integer[]{6, 7, 2, 1, 9, 5, 3, 4, 8},
             new Integer[]{1, 9, 8, 3, 4, 2, 5, 6, 7},

@@ -18,8 +18,10 @@ public class SudokuSolver {
             .boxed().collect(Collectors.toList());
 
     public Optional<Integer[][]> solve(final Integer[][] input) {
-        return !sudokuValidator.isBoardValid(input) ?
-                Optional.empty() : solveValidInput(input);
+        // Prevent side-effects by copying wrapper array
+        final var copy = ArrayUtils.copy(input);
+        return !sudokuValidator.isBoardValid(copy) ?
+                Optional.empty() : solveValidInput(copy);
     }
 
     private Optional<Integer[][]> solveValidInput(final Integer[][] input) {
