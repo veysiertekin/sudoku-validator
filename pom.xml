@@ -20,7 +20,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
-        <maven.compiler.release>${maven.compiler.source}</maven.compiler.release>
 
         <!-- Compiler plugins -->
         <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
