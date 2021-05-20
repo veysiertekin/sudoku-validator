@@ -22,10 +22,9 @@ class FileLoaderTest {
     @Test
     void loadValidFile() {
         final var testFile = "src/test/resources/data/01-valid-input.csv";
-        final var file = new FileLoader(testFile).load();
-
-        for (String line : INPUT) {
-            assertThat(line).isEqualTo(file.nextLine());
+        final var lines = new FileLoader(testFile).load();
+        for (int i = 0; i < INPUT.length; i++) {
+            assertThat(lines[i]).isEqualTo(INPUT[i]);
         }
     }
 

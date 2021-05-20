@@ -2,9 +2,9 @@ package org.bitbucket.veysiertekin.sudoku_validator;
 
 import org.bitbucket.veysiertekin.sudoku_validator.exception.InvalidFileException;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class FileLoader {
     private final String fileName;
@@ -13,11 +13,12 @@ public class FileLoader {
         this.fileName = fileName;
     }
 
-    public Scanner load() {
+    public String[] load() {
         try {
-            final FileInputStream input = new FileInputStream(fileName);
-            return new Scanner(input);
-        } catch (FileNotFoundException e) {
+            final var path = Paths.get(fileName);
+            return Files.lines(path)
+                    .toArray(String[]::new);
+        } catch (IOException e) {
             throw new InvalidFileException(e.getMessage(), e);
         }
     }
