@@ -1,4 +1,4 @@
-package org.bitbucket.veysiertekin.sudoku_validator;
+package org.bitbucket.veysiertekin.sudoku_validator.file;
 
 import org.bitbucket.veysiertekin.sudoku_validator.exception.InvalidFileException;
 

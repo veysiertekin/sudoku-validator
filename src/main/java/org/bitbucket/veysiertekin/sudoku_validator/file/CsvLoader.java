@@ -1,5 +1,6 @@
-package org.bitbucket.veysiertekin.sudoku_validator;
+package org.bitbucket.veysiertekin.sudoku_validator.file;
 
+import org.bitbucket.veysiertekin.sudoku_validator.ApplicationMessage;
 import org.bitbucket.veysiertekin.sudoku_validator.exception.InvalidCsvFormatException;
 
 import java.util.Arrays;
