@@ -1,6 +1,8 @@
 package org.bitbucket.veysiertekin.sudoku_validator;
 
 public enum ApplicationMessage {
+    // Validator messages
+    DUPLICATED_DATA_POINTS("Duplicates values has been found on same %s. Duplicated value: %s, Conflicted data points: %s"),
     // Cli error messages
     INVALID_ARGUMENT_SIZE("Expected arguments: %s, given: %s"),
     INVALID_FILE_PATH("File does not exists! File path: %s"),
@@ -11,7 +13,9 @@ public enum ApplicationMessage {
     MALFORMED_LINE("+Input does not match desired format!\n> Expected format: %s\n> Line number: %s\n> Input: %s"),
     // Main App
     STATUS_INVALID("INVALID"),
-    STATUS_VALID("VALID");
+    STATUS_VALID("VALID"),
+    // Sudoku solver
+    UNSOLVABLE_PUZZLE("Board visually valid but it is unsolvable!");
 
     private final String messageFormat;
 

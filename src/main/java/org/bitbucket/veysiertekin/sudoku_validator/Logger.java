@@ -20,6 +20,10 @@ public class Logger {
         printToStream(System.err, exception.getMessage());
     }
 
+    public void error(ApplicationMessage message, Object... parameters) {
+        printToStream(System.err, message.format(parameters));
+    }
+
     public void info(ApplicationMessage message, Object... parameters) {
         printToStream(System.out, message.format(parameters));
     }

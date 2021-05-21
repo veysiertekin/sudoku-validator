@@ -28,11 +28,15 @@ public class CsvLoader {
     public Integer[][] load() {
         var lines = fileLoader.load();
         validateCsvLines(lines);
-        var result = Arrays.stream(lines)
-                .map(this::parseLine)
-                .toArray(Integer[][]::new);
+        var result = parseLines(lines);
         validateResultSize(result);
         return result;
+    }
+
+    private Integer[][] parseLines(String[] lines) {
+        return Arrays.stream(lines)
+                .map(this::parseLine)
+                .toArray(Integer[][]::new);
     }
 
     private Integer[] parseLine(final String line) {
@@ -56,9 +60,7 @@ public class CsvLoader {
 
     private void validateCsvLines(final String[] lines) {
         IntStream.range(0, lines.length)
-                .forEach(index ->
-                        validateCsvLine(lines[index], index + 1)
-                );
+                .forEach(index -> validateCsvLine(lines[index], index + 1));
     }
 
     private void validateCsvLine(final String line, final Integer lineNumber) {

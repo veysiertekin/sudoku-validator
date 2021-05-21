@@ -16,10 +16,14 @@ public class FileLoader {
     public String[] load() {
         try {
             final var path = Paths.get(fileName);
-            return Files.lines(path)
-                    .toArray(String[]::new);
+            return readLines(path);
         } catch (IOException e) {
             throw new InvalidFileException(e, fileName);
         }
+    }
+
+    private String[] readLines(java.nio.file.Path path) throws IOException {
+        return Files.lines(path)
+                .toArray(String[]::new);
     }
 }

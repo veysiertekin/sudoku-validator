@@ -15,8 +15,8 @@ public class App {
                 logger.info(ApplicationMessage.STATUS_VALID);
             else
                 logger.info(ApplicationMessage.STATUS_INVALID);
-        } catch (SudokuRuntimeException se) {
-            logger.error(se);
+        } catch (SudokuRuntimeException exception) {
+            logger.error(exception);
             logger.info(ApplicationMessage.STATUS_INVALID);
         }
     }

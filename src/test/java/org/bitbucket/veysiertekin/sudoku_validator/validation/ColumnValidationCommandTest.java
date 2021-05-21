@@ -8,16 +8,19 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static com.github.stefanbirkner.systemlambda.SystemLambda.tapSystemErr;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ColumnValidationCommandTest {
     @ParameterizedTest
     @DisplayName("Given sudoku board, When it abides by the column rules, Then it should return true")
     @MethodSource("inputs")
-    void checkInputFormat(final Integer[][] input, final Boolean expectedResult) {
-        final boolean result = new ColumnValidationCommand().validate(input);
-        assertThat(result)
-                .isEqualTo(expectedResult);
+    void checkInputFormat(final Integer[][] input, final Boolean expectedResult, String expectedLog) throws Exception {
+        var errorLog = tapSystemErr(() -> {
+            final boolean result = new ColumnValidationCommand().validate(input);
+            assertThat(result).isEqualTo(expectedResult);
+        });
+        assertThat(errorLog.trim()).isEqualTo(expectedLog);
     }
 
     static Stream<Arguments> inputs() {
@@ -33,9 +36,9 @@ class ColumnValidationCommandTest {
                         new Integer[]{5},
                         new Integer[]{6},
                         new Integer[]{7}
-                }, false),
+                }, false, "Duplicates values has been found on same COLUMN. Duplicated value: 1, Conflicted data points: (1, 0), (2, 0)"),
                 // Valid
-                Arguments.of(CommonTestConstants.VALID_BOARD_SAMPLE, true)
+                Arguments.of(CommonTestConstants.VALID_BOARD_SAMPLE, true, "")
         );
     }
 }

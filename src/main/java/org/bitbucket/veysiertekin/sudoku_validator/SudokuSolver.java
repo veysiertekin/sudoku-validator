@@ -12,16 +12,23 @@ import static org.bitbucket.veysiertekin.sudoku_validator.CommonConstants.BOARD_
 import static org.bitbucket.veysiertekin.sudoku_validator.CommonConstants.EMPTY_FIELD;
 
 public class SudokuSolver {
+    private static final Logger logger = Logger.getInstance();
     private final SudokuValidator sudokuValidator = new SudokuValidator();
 
     private final List<Integer> possibleValues = IntStream.range(1, BOARD_DIMENSION + 1)
             .boxed().collect(Collectors.toList());
 
     public Optional<Integer[][]> solve(final Integer[][] input) {
+        if (!sudokuValidator.isBoardValid(input)) {
+            return Optional.empty();
+        }
         // Prevent side-effects by copying wrapper arrays
-        final var copy = ArrayUtils.copy(input);
-        return !sudokuValidator.isBoardValid(copy) ?
-                Optional.empty() : solveValidInput(copy);
+        final var copy = ArrayUtils.copyWrapper(input);
+        final var result = solveValidInput(copy);
+        if (result.isEmpty()) {
+            logger.error(ApplicationMessage.UNSOLVABLE_PUZZLE);
+        }
+        return result;
     }
 
     private Optional<Integer[][]> solveValidInput(final Integer[][] input) {
@@ -54,15 +61,16 @@ public class SudokuSolver {
         return Optional.empty();
     }
 
-    private boolean boardCompleted(Integer[][] input) {
-        for (Integer[] integers : input)
-            for (Integer integer : integers)
-                if (Objects.equals(integer, EMPTY_FIELD))
+    private boolean boardCompleted(final Integer[][] input) {
+        for (Integer[] row : input)
+            for (Integer data : row)
+                if (Objects.equals(data, EMPTY_FIELD))
                     return false;
         return true;
     }
 
-    public boolean canValueBeInsertedToEmptyIndex(Integer[][] input, Integer value, int rowIndex, int columnIndex) {
+    public boolean canValueBeInsertedToEmptyIndex(final Integer[][] input, final Integer value,
+                                                  final int rowIndex, final int columnIndex) {
         var boxRow = calculateBoxIndex(rowIndex);
         var boxColumn = calculateBoxIndex(columnIndex);
 

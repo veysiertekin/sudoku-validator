@@ -7,6 +7,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,10 +31,21 @@ class BoxValidationCommandTest {
                 new Integer[]{9, 5, 6, 2, 4, 5},
                 new Integer[]{2, 1, 4, 7, null, 9}
         };
-        final var expectedBox = new Integer[]{1, 2, 3, 2, 4, 5, 7, null, 9};
+        final var expectedBox = Arrays.asList(
+                new SudokuCell(1, 0, 3),
+                new SudokuCell(2, 0, 4),
+                new SudokuCell(3, 0, 5),
+                new SudokuCell(2, 1, 3),
+                new SudokuCell(4, 1, 4),
+                new SudokuCell(5, 1, 5),
+                new SudokuCell(7, 2, 3),
+                new SudokuCell(null, 2, 4),
+                new SudokuCell(9, 2, 5)
+        );
         final int row = 0, column = 1;
-        Integer[] result = new BoxValidationCommand().extractBox(input, row, column);
-        assertThat(result).isEqualTo(expectedBox);
+        List<SudokuCell> result = new BoxValidationCommand().extractBox(input, row, column);
+        assertThat(collectCellAsString(result))
+                .isEqualTo(collectCellAsString(expectedBox));
     }
 
     static Stream<Arguments> inputs() {
@@ -51,5 +65,9 @@ class BoxValidationCommandTest {
                 // Valid
                 Arguments.of(CommonTestConstants.VALID_BOARD_SAMPLE, true)
         );
+    }
+
+    private String collectCellAsString(List<SudokuCell> expectedBox) {
+        return expectedBox.stream().map(SudokuCell::toString).collect(Collectors.joining());
     }
 }

@@ -28,7 +28,11 @@ class AppTest {
                                 "> Input: -,3,,,7,,,,\n" +
                                 "INVALID"
                 ),
-                Arguments.of(new String[]{"src/test/resources/data/05-visually-valid-but-unsolvable.csv"}, "INVALID")
+                Arguments.of(
+                        new String[]{"src/test/resources/data/05-visually-valid-but-unsolvable.csv"},
+                        "Board visually valid but it is unsolvable!\n" +
+                                "INVALID"
+                )
         );
     }
 }

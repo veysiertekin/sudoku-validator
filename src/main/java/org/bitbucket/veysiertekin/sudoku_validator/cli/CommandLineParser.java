@@ -20,20 +20,20 @@ public class CommandLineParser {
         return new CommandLineInput(args[0]);
     }
 
-    private void validateFilePath() {
-        var filePath = args[0];
-        if (!new File(filePath).exists()) {
-            throw new InvalidCliArgumentException(
-                    ApplicationMessage.INVALID_FILE_PATH, filePath
-            );
-        }
-    }
-
     private void validateArgumentSize() {
         var argumentSize = args.length;
         if (argumentSize != EXPECTED_ARGUMENTS_SIZE) {
             throw new InvalidCliArgumentException(
                     ApplicationMessage.INVALID_ARGUMENT_SIZE, EXPECTED_ARGUMENTS_SIZE, argumentSize
+            );
+        }
+    }
+
+    private void validateFilePath() {
+        var filePath = args[0];
+        if (!new File(filePath).exists()) {
+            throw new InvalidCliArgumentException(
+                    ApplicationMessage.INVALID_FILE_PATH, filePath
             );
         }
     }

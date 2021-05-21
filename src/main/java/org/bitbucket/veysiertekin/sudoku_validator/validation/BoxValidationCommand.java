@@ -1,6 +1,6 @@
 package org.bitbucket.veysiertekin.sudoku_validator.validation;
 
-import org.bitbucket.veysiertekin.sudoku_validator.utils.ArrayUtils;
+import java.util.ArrayList;
 
 import static org.bitbucket.veysiertekin.sudoku_validator.CommonConstants.BOARD_DIMENSION;
 
@@ -10,19 +10,19 @@ public class BoxValidationCommand implements ValidationCommand {
         for (int rowIndex = 0; rowIndex < BOARD_DIMENSION / 3; rowIndex++) {
             for (int columnIndex = 0; columnIndex < BOARD_DIMENSION / 3; columnIndex++) {
                 var box = extractBox(input, rowIndex, columnIndex);
-                if (!ArrayUtils.containsDistinctValuesExceptNulls(box))
+                if (!ValidationHelper.containsDistinctValues(ValidationType.BOX, box))
                     return false;
             }
         }
         return true;
     }
 
-    public Integer[] extractBox(final Integer[][] input, int rowIndex, int columnIndex) {
-        var result = new Integer[BOARD_DIMENSION];
-        var resultCursor = 0;
+    public ArrayList<SudokuCell> extractBox(final Integer[][] input, int rowIndex, int columnIndex) {
+        var result = new ArrayList<SudokuCell>(BOARD_DIMENSION);
         for (int row = rowIndex * 3; row < rowIndex * 3 + 3; row++) {
-            System.arraycopy(input[row], columnIndex * 3, result, resultCursor, 3);
-            resultCursor += 3;
+            for (int column = columnIndex * 3; column < columnIndex * 3 + 3; column++) {
+                result.add(new SudokuCell(input[row][column], row, column));
+            }
         }
         return result;
     }
