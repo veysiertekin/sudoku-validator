@@ -6,7 +6,7 @@ import org.bitbucket.veysiertekin.sudoku_validator.file.CsvLoader;
 
 public class App {
     public static void main(String[] args) {
-        var logger = new Logger();
+        var logger = Logger.getInstance();
         try {
             var options = new CommandLineParser(args).parse();
             var data = new CsvLoader(options.fileName()).load();

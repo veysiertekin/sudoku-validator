@@ -9,7 +9,7 @@ public enum ApplicationMessage {
     // Csv loader error messages
     INVALID_FILE_SIZE("Invalid line count for given input size: %s"),
     MALFORMED_LINE("+Input does not match desired format!\n> Expected format: %s\n> Line number: %s\n> Input: %s"),
-    // App
+    // Main App
     STATUS_INVALID("INVALID"),
     STATUS_VALID("VALID");
 
