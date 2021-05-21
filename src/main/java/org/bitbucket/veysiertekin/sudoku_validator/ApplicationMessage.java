@@ -3,8 +3,9 @@ package org.bitbucket.veysiertekin.sudoku_validator;
 public enum ApplicationMessage {
     // Validator messages,
     INVALID_BOARD_HEIGHT("Invalid row count! Input row count: %s"),
-    DUPLICATED_DATA_POINTS("Duplicates values has been found on same %s. Duplicated value: %s, Conflicted data points: %s"),
+    DUPLICATED_DATA_POINTS("Duplicated values have been found on same %s. Duplicated value: %s, Conflicted data points (x,y): %s"),
     // Cli error messages
+    CLI_USAGE("Usage:\n $ ./validate.sh <path to file>\n\nExample:\n $ ./validate.sh src/test/resources/data/01-valid-input.csv\n"),
     INVALID_ARGUMENT_SIZE("Expected arguments: %s, given: %s"),
     INVALID_FILE_PATH("File does not exists! File path: %s"),
     // File loader error messages
@@ -16,7 +17,8 @@ public enum ApplicationMessage {
     STATUS_INVALID("INVALID"),
     STATUS_VALID("VALID"),
     // Sudoku solver
-    UNSOLVABLE_PUZZLE("Board visually valid but it is unsolvable!");
+    UNSOLVABLE_PUZZLE("Board visually valid but it is unsolvable!"),
+    SOLUTION_HAS_BEEN_FOUND("Solution has been found for given sudoku puzzle!\n\nResult:\n%s\n");
 
     private final String messageFormat;
 

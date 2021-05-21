@@ -6,6 +6,9 @@ import java.util.ArrayList;
 
 import static org.bitbucket.veysiertekin.sudoku_validator.CommonConstants.BOARD_DIMENSION;
 
+/**
+ * Performs box validations on given Sudoku board
+ */
 public class BoxValidationCommand implements ValidationCommand {
     @Override
     public boolean validate(Integer[][] input) {

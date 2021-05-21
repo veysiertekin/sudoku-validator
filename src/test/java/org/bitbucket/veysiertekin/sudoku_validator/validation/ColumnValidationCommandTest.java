@@ -36,7 +36,7 @@ class ColumnValidationCommandTest {
                         new Integer[]{5},
                         new Integer[]{6},
                         new Integer[]{7}
-                }, false, "Duplicates values has been found on same COLUMN. Duplicated value: 1, Conflicted data points: (1, 0), (2, 0)"),
+                }, false, "Duplicated values have been found on same COLUMN. Duplicated value: 1, Conflicted data points (x,y): (1, 0), (2, 0)"),
                 // Valid
                 Arguments.of(CommonTestConstants.VALID_BOARD_SAMPLE, true, "")
         );

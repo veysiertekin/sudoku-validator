@@ -15,7 +15,13 @@ public class CsvLoader {
     private static final String EMPTY_STRING = "";
     private static final int DISABLED_THRESHOLD = -1;
 
+    /**
+     * Desired line format: optional digits between 8 comma.
+     */
     private final Pattern linePattern = Pattern.compile("([1-9]?,){8}[1-9]?");
+    /**
+     * Line separation pattern
+     */
     private final Pattern splitPattern = Pattern.compile(",");
 
     private final FileLoader fileLoader;
@@ -24,6 +30,11 @@ public class CsvLoader {
         this.fileLoader = new FileLoader(fileName);
     }
 
+    /**
+     * Reads the given file and converts to desired format
+     *
+     * @return Integer series of every row from file
+     */
     public Integer[][] load() {
         var lines = fileLoader.load();
         validateCsvLines(lines);

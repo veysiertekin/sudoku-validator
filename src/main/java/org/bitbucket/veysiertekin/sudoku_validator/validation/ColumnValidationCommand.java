@@ -7,6 +7,9 @@ import java.util.stream.IntStream;
 
 import static org.bitbucket.veysiertekin.sudoku_validator.CommonConstants.BOARD_DIMENSION;
 
+/**
+ * Performs column validations on given Sudoku board
+ */
 public class ColumnValidationCommand implements ValidationCommand {
     @Override
     public boolean validate(Integer[][] input) {

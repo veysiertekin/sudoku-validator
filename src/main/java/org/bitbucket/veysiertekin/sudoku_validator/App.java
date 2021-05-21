@@ -7,7 +7,16 @@ import org.bitbucket.veysiertekin.sudoku_validator.sudoku.SudokuSolver;
 import org.bitbucket.veysiertekin.sudoku_validator.utils.Logger;
 
 /**
+ * Starting point of Sudoku validation.
  *
+ * <pre>
+ * Usage:
+ * $ ./validate.sh path_to_file
+ * </pre>
+ * <pre>
+ * Example:
+ * $ ./validate.sh src/test/resources/data/01-valid-input.csv
+ * </pre>
  */
 public class App {
     public static void main(String[] args) {

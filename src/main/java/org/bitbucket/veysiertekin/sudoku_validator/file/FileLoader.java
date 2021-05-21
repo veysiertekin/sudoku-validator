@@ -13,6 +13,11 @@ public class FileLoader {
         this.fileName = fileName;
     }
 
+    /**
+     * Reads the file has been given
+     *
+     * @return String lines of file content
+     */
     public String[] load() {
         try {
             final var path = Paths.get(fileName);

@@ -5,6 +5,13 @@ import org.bitbucket.veysiertekin.sudoku_validator.utils.Logger;
 
 import static org.bitbucket.veysiertekin.sudoku_validator.CommonConstants.BOARD_DIMENSION;
 
+/**
+ * Performs input row size validations.
+ * Does not check row content, since row format will be validated
+ * by {@linkplain org.bitbucket.veysiertekin.sudoku_validator.file.CsvLoader} at reading stage
+ *
+ * @see org.bitbucket.veysiertekin.sudoku_validator.file.CsvLoader#validateCsvLine(String, Integer)
+ */
 public class InputSizeValidationCommand implements ValidationCommand {
     private static final Logger logger = Logger.getInstance();
 

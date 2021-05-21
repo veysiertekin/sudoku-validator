@@ -13,13 +13,26 @@ import java.util.stream.IntStream;
 import static org.bitbucket.veysiertekin.sudoku_validator.CommonConstants.BOARD_DIMENSION;
 import static org.bitbucket.veysiertekin.sudoku_validator.CommonConstants.EMPTY_FIELD;
 
+/**
+ * Finds a possible solution of given sudoku board.
+ */
 public class SudokuSolver {
     private static final Logger logger = Logger.getInstance();
     private final SudokuValidator sudokuValidator = new SudokuValidator();
+    private final SudokuBoardSerializer boardSerializer = new SudokuBoardSerializer();
 
     private final List<Integer> possibleValues = IntStream.range(1, BOARD_DIMENSION + 1)
             .boxed().collect(Collectors.toList());
 
+    /**
+     * <p>
+     * Performs deep-first-search algorithm to find a possible solution.
+     * <p>
+     * Prints solution to {@link System#out} if anything has been found.
+     *
+     * @param input given input
+     * @return returns a possible solution if anything has been found, otherwise returns {@link Optional#empty()}
+     */
     public Optional<Integer[][]> solve(final Integer[][] input) {
         if (!sudokuValidator.isBoardValid(input)) {
             return Optional.empty();
@@ -29,6 +42,8 @@ public class SudokuSolver {
         final var result = solveValidInput(copy);
         if (result.isEmpty()) {
             logger.error(ApplicationMessage.UNSOLVABLE_PUZZLE);
+        } else {
+            logger.info(ApplicationMessage.SOLUTION_HAS_BEEN_FOUND, boardSerializer.serializeAsString(result.get()));
         }
         return result;
     }

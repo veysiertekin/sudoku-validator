@@ -2,6 +2,9 @@ package org.bitbucket.veysiertekin.sudoku_validator.exception;
 
 import org.bitbucket.veysiertekin.sudoku_validator.ApplicationMessage;
 
+/**
+ * Generic exception interface & signature
+ */
 public abstract class SudokuRuntimeException extends RuntimeException {
     private final ApplicationMessage message;
     private final Object[] parameters;
