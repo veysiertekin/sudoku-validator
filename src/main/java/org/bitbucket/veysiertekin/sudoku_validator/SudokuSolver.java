@@ -18,7 +18,7 @@ public class SudokuSolver {
             .boxed().collect(Collectors.toList());
 
     public Optional<Integer[][]> solve(final Integer[][] input) {
-        // Prevent side-effects by copying wrapper array
+        // Prevent side-effects by copying wrapper arrays
         final var copy = ArrayUtils.copy(input);
         return !sudokuValidator.isBoardValid(copy) ?
                 Optional.empty() : solveValidInput(copy);
@@ -49,8 +49,6 @@ public class SudokuSolver {
             }
         }
         /*
-         * Since this method has been designed to be used after
-         * {@link SudokuValidator#validateAll(Integer[][])} method,
          * It is impossible to get here because of the early exits in the function
          */
         return Optional.empty();

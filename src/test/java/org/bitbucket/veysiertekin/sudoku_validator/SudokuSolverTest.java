@@ -51,6 +51,19 @@ class SudokuSolverTest {
                         new Integer[]{2, null, 7, 4, 1, 9, 6, 3, 5},
                         new Integer[]{null, 4, 5, 2, 8, 6, 1, 7, 9}
                 }, Optional.of(CommonTestConstants.VALID_BOARD_RESULT)),
+                // Visually valid but unsolvable puzzle
+                // this puzzle has been taken from: http://www.jibble.org/impossible-sudoku/
+                Arguments.of(new Integer[][]{
+                        new Integer[]{null, 7, null, null, null, 6, null, null, null},
+                        new Integer[]{9, null, null, null, null, null, null, 4, 1},
+                        new Integer[]{null, null, 8, null, null, 9, null, 5, null},
+                        new Integer[]{null, 9, null, null, null, 7, null, null, 2},
+                        new Integer[]{null, null, 3, null, null, null, 8, null, null},
+                        new Integer[]{4, null, null, 8, null, null, null, 1, null},
+                        new Integer[]{null, 8, null, 3, null, null, 9, null, null},
+                        new Integer[]{1, 6, null, null, null, null, null, null, 7},
+                        new Integer[]{null, null, null, 5, null, null, null, 8, null}
+                }, Optional.empty()),
                 Arguments.of(CommonTestConstants.VALID_BOARD_SAMPLE, Optional.of(CommonTestConstants.VALID_BOARD_RESULT))
         );
     }
