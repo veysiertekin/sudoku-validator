@@ -15,6 +15,7 @@
         <!-- Test dependencies -->
         <junit-bom.version>5.7.2</junit-bom.version>
         <assertj-core.version>3.19.0</assertj-core.version>
+        <system-lambda.version>1.2.0</system-lambda.version>
 
         <!-- Project structure -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -40,6 +41,12 @@
             <version>${assertj-core.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.github.stefanbirkner</groupId>
+            <artifactId>system-lambda</artifactId>
+            <version>${system-lambda.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -60,6 +67,14 @@
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <properties>
+                            <configurationParameters>
+                                junit.platform.output.capture.stdout=true
+                                junit.platform.output.capture.stderr=true
+                            </configurationParameters>
+                        </properties>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <artifactId>maven-jar-plugin</artifactId>
