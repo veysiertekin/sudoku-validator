@@ -6,6 +6,9 @@ import org.bitbucket.veysiertekin.sudoku_validator.file.CsvLoader;
 import org.bitbucket.veysiertekin.sudoku_validator.sudoku.SudokuSolver;
 import org.bitbucket.veysiertekin.sudoku_validator.utils.Logger;
 
+/**
+ *
+ */
 public class App {
     public static void main(String[] args) {
         var logger = Logger.getInstance();
