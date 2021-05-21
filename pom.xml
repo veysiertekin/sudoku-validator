@@ -67,14 +67,6 @@
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven-compiler-plugin.version}</version>
-                    <configuration>
-                        <properties>
-                            <configurationParameters>
-                                junit.platform.output.capture.stdout=true
-                                junit.platform.output.capture.stderr=true
-                            </configurationParameters>
-                        </properties>
-                    </configuration>
                 </plugin>
                 <plugin>
                     <artifactId>maven-jar-plugin</artifactId>
