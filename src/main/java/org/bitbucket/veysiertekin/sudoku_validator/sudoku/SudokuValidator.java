@@ -10,7 +10,7 @@ public class SudokuValidator {
 
     public SudokuValidator() {
         validators = new ArrayList<>();
-        this.validators.add(new InputFormatValidationCommand());
+        this.validators.add(new InputSizeValidationCommand());
         this.validators.add(new RowValidationCommand());
         this.validators.add(new ColumnValidationCommand());
         this.validators.add(new BoxValidationCommand());

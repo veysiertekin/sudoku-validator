@@ -9,13 +9,13 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class InputFormatValidationCommandTest {
+class InputSizeValidationCommandTest {
 
     @ParameterizedTest
     @DisplayName("Given input format, When it is invalid, Then it should return false")
     @MethodSource("inputs")
     void checkInputFormat(final Integer[][] input, final Boolean expectedResult) {
-        final boolean result = new InputFormatValidationCommand().validate(input);
+        final boolean result = new InputSizeValidationCommand().validate(input);
         assertThat(result)
                 .isEqualTo(expectedResult);
     }
@@ -26,9 +26,6 @@ class InputFormatValidationCommandTest {
                 Arguments.of(null, false),
                 // Empty
                 Arguments.of(new Integer[][]{}, false),
-                // Invalid numeric range
-                Arguments.of(new Integer[][]{{0}}, false),
-                Arguments.of(new Integer[][]{{10}}, false),
                 // Invalid size
                 Arguments.of(new Integer[][]{{1}}, false),
                 // Valid formatted input, null for empty fields
@@ -42,19 +39,7 @@ class InputFormatValidationCommandTest {
                         new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9},
                         new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9},
                         new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9}
-                }, true),
-                // Invalid because of negative value in the full-size board
-                Arguments.of(new Integer[][]{
-                        new Integer[]{null, -1, 2, 3, 4, 5, 6, 7, 9},
-                        new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9},
-                        new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9},
-                        new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9},
-                        new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9},
-                        new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9},
-                        new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9},
-                        new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9},
-                        new Integer[]{null, 1, 2, 3, 4, 5, 6, 7, 9}
-                }, false)
+                }, true)
         );
     }
 }

@@ -2,8 +2,6 @@ package org.bitbucket.veysiertekin.sudoku_validator;
 
 public enum ApplicationMessage {
     // Validator messages,
-    OUT_OF_RANGE_DATA_VALUE("Out of range data value! Value: %s, Row number: %s, Column number: %s"),
-    INVALID_BOARD_WIDTH("Invalid column size! Row number: %s"),
     INVALID_BOARD_HEIGHT("Invalid row count! Input row count: %s"),
     DUPLICATED_DATA_POINTS("Duplicates values has been found on same %s. Duplicated value: %s, Conflicted data points: %s"),
     // Cli error messages

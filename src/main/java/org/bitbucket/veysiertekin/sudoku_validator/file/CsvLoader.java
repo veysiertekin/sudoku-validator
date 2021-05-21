@@ -12,7 +12,6 @@ import static org.bitbucket.veysiertekin.sudoku_validator.CommonConstants.BOARD_
 import static org.bitbucket.veysiertekin.sudoku_validator.CommonConstants.EMPTY_FIELD;
 
 public class CsvLoader {
-
     private static final String EMPTY_STRING = "";
     private static final int DISABLED_THRESHOLD = -1;
 
