@@ -1,7 +1,9 @@
 package org.bitbucket.veysiertekin.sudoku_validator.exception;
 
-public class InvalidCsvFormatException extends RuntimeException {
-    public InvalidCsvFormatException(String message) {
-        super(message);
+import org.bitbucket.veysiertekin.sudoku_validator.ApplicationMessage;
+
+public class InvalidCsvFormatException extends SudokuRuntimeException {
+    public InvalidCsvFormatException(ApplicationMessage message, Object... parameters) {
+        super(message, parameters);
     }
 }

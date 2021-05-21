@@ -19,7 +19,7 @@ public class FileLoader {
             return Files.lines(path)
                     .toArray(String[]::new);
         } catch (IOException e) {
-            throw new InvalidFileException(e.getMessage(), e);
+            throw new InvalidFileException(e, fileName);
         }
     }
 }

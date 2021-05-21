@@ -24,15 +24,32 @@ class CsvLoaderTest {
 
     @ParameterizedTest
     @MethodSource("malformedFiles")
-    void loadInvalidFile(final String fileName) {
+    void loadInvalidFile(final String fileName, final String expectedMessage) {
         assertThatThrownBy(() -> new CsvLoader(fileName).load())
-                .isInstanceOf(InvalidCsvFormatException.class);
+                .isInstanceOf(InvalidCsvFormatException.class)
+                .hasMessage(expectedMessage);
     }
 
     private static Stream<Arguments> malformedFiles() {
         return Stream.of(
-                Arguments.of("src/test/resources/data/02-marformed-input.csv"),
-                Arguments.of("src/test/resources/data/03-invalid-input.csv")
+                Arguments.of(
+                        "src/test/resources/data/02-marformed-input.csv",
+                        "+Input does not match desired format!\n" +
+                                "> Expected format: ([1-9]?,){8}[1-9]?\n" +
+                                "> Line number: 1\n" +
+                                "> Input: -,3,,,7,,,,"
+                ),
+                Arguments.of(
+                        "src/test/resources/data/03-invalid-input.csv",
+                        "+Input does not match desired format!\n" +
+                                "> Expected format: ([1-9]?,){8}[1-9]?\n" +
+                                "> Line number: 5\n" +
+                                "> Input: 4,,,8,"
+                ),
+                Arguments.of(
+                        "src/test/resources/data/04-invalid-line-count.csv",
+                        "Invalid line count for given input size: 2"
+                )
         );
     }
 }
