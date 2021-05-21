@@ -1,6 +1,7 @@
 package org.bitbucket.veysiertekin.sudoku_validator.validation;
 
-import org.bitbucket.veysiertekin.sudoku_validator.Logger;
+import org.bitbucket.veysiertekin.sudoku_validator.utils.Logger;
+import org.bitbucket.veysiertekin.sudoku_validator.model.SudokuCell;
 
 import java.util.List;
 import java.util.Objects;

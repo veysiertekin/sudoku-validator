@@ -1,5 +1,7 @@
 package org.bitbucket.veysiertekin.sudoku_validator.validation;
 
+import org.bitbucket.veysiertekin.sudoku_validator.model.SudokuCell;
+
 import java.util.ArrayList;
 import java.util.stream.IntStream;
 

@@ -1,4 +1,4 @@
-package org.bitbucket.veysiertekin.sudoku_validator.validation;
+package org.bitbucket.veysiertekin.sudoku_validator.model;
 
 public class SudokuCell {
     private final Integer data;

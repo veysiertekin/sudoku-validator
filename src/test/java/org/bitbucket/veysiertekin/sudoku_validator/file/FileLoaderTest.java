@@ -1,7 +1,6 @@
 package org.bitbucket.veysiertekin.sudoku_validator.file;
 
 import org.bitbucket.veysiertekin.sudoku_validator.exception.InvalidFileException;
-import org.bitbucket.veysiertekin.sudoku_validator.file.FileLoader;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

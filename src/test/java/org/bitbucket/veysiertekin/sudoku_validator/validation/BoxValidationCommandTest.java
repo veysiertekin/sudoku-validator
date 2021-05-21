@@ -1,6 +1,7 @@
 package org.bitbucket.veysiertekin.sudoku_validator.validation;
 
 import org.bitbucket.veysiertekin.sudoku_validator.CommonTestConstants;
+import org.bitbucket.veysiertekin.sudoku_validator.model.SudokuCell;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
