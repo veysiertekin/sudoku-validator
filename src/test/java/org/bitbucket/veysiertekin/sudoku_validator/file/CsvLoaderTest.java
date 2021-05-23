@@ -18,7 +18,7 @@ class CsvLoaderTest {
     @Test
     void loadValidFile() {
         final var testFile = "src/test/resources/data/01-valid-input.csv";
-        var lines = new CsvLoader(CsvOptionFactory.createSudokuCsvOptionFrom(new CommandLineInput(testFile))).load();
+        var lines = loadCsvFile(testFile);
         for (int i = 0; i < CommonTestConstants.VALID_BOARD_SAMPLE.length; i++) {
             assertThat(lines[i])
                     .isEqualTo(CommonTestConstants.VALID_BOARD_SAMPLE[i]);
@@ -28,7 +28,7 @@ class CsvLoaderTest {
     @ParameterizedTest
     @MethodSource("malformedFiles")
     void loadInvalidFile(final String fileName, final String expectedMessage) {
-        assertThatThrownBy(() -> new CsvLoader(CsvOptionFactory.createSudokuCsvOptionFrom(new CommandLineInput(fileName))).load())
+        assertThatThrownBy(() -> loadCsvFile(fileName))
                 .isInstanceOf(InvalidCsvFormatException.class)
                 .hasMessage(expectedMessage);
     }
@@ -54,5 +54,9 @@ class CsvLoaderTest {
                         "Invalid line count for given input size: 2"
                 )
         );
+    }
+
+    private Integer[][] loadCsvFile(String fileName) {
+        return new CsvLoader(CsvOptionFactory.createSudokuCsvOptionFrom(new CommandLineInput(fileName))).load();
     }
 }
