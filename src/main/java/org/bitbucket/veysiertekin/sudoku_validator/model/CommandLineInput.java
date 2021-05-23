@@ -1,4 +1,4 @@
-package org.bitbucket.veysiertekin.sudoku_validator.cli;
+package org.bitbucket.veysiertekin.sudoku_validator.model;
 
 public class CommandLineInput {
     private final String fileName;

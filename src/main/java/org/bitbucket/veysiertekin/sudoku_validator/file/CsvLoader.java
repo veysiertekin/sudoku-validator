@@ -2,6 +2,7 @@ package org.bitbucket.veysiertekin.sudoku_validator.file;
 
 import org.bitbucket.veysiertekin.sudoku_validator.ApplicationMessage;
 import org.bitbucket.veysiertekin.sudoku_validator.exception.InvalidCsvFormatException;
+import org.bitbucket.veysiertekin.sudoku_validator.model.CsvOption;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -15,22 +16,24 @@ import static org.bitbucket.veysiertekin.sudoku_validator.CommonConstants.EMPTY_
  * Handles csv loading process, accepts a filename and a row validation
  */
 public class CsvLoader {
+    public static final String DELIMITER = ",";
     private static final String EMPTY_STRING = "";
     private static final int DISABLED_THRESHOLD = -1;
 
     /**
      * Desired line format: optional digits between 8 comma.
      */
-    private final Pattern linePattern = Pattern.compile("([1-9]?,){8}[1-9]?");
+    private final Pattern linePattern;
     /**
-     * Line separation pattern
+     * Csv line separation pattern
      */
-    private final Pattern splitPattern = Pattern.compile(",");
+    private final Pattern splitPattern = Pattern.compile(DELIMITER);
 
     private final FileLoader fileLoader;
 
-    public CsvLoader(final String fileName) {
-        this.fileLoader = new FileLoader(fileName);
+    public CsvLoader(final CsvOption csvOption) {
+        this.fileLoader = new FileLoader(csvOption.fileName());
+        this.linePattern = csvOption.csvLinePattern();
     }
 
     /**

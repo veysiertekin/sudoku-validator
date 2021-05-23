@@ -3,6 +3,7 @@ package org.bitbucket.veysiertekin.sudoku_validator.cli;
 import org.bitbucket.veysiertekin.sudoku_validator.ApplicationMessage;
 import org.bitbucket.veysiertekin.sudoku_validator.exception.InvalidCliArgumentException;
 import org.bitbucket.veysiertekin.sudoku_validator.exception.SudokuRuntimeException;
+import org.bitbucket.veysiertekin.sudoku_validator.model.CommandLineInput;
 import org.bitbucket.veysiertekin.sudoku_validator.utils.Logger;
 
 import java.io.File;

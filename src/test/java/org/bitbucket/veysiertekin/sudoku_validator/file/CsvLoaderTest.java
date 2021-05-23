@@ -2,6 +2,8 @@ package org.bitbucket.veysiertekin.sudoku_validator.file;
 
 import org.bitbucket.veysiertekin.sudoku_validator.CommonTestConstants;
 import org.bitbucket.veysiertekin.sudoku_validator.exception.InvalidCsvFormatException;
+import org.bitbucket.veysiertekin.sudoku_validator.factory.CsvOptionFactory;
+import org.bitbucket.veysiertekin.sudoku_validator.model.CommandLineInput;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -16,7 +18,7 @@ class CsvLoaderTest {
     @Test
     void loadValidFile() {
         final var testFile = "src/test/resources/data/01-valid-input.csv";
-        var lines = new CsvLoader(testFile).load();
+        var lines = new CsvLoader(CsvOptionFactory.createSudokuCsvOptionFrom(new CommandLineInput(testFile))).load();
         for (int i = 0; i < CommonTestConstants.VALID_BOARD_SAMPLE.length; i++) {
             assertThat(lines[i])
                     .isEqualTo(CommonTestConstants.VALID_BOARD_SAMPLE[i]);
@@ -26,7 +28,7 @@ class CsvLoaderTest {
     @ParameterizedTest
     @MethodSource("malformedFiles")
     void loadInvalidFile(final String fileName, final String expectedMessage) {
-        assertThatThrownBy(() -> new CsvLoader(fileName).load())
+        assertThatThrownBy(() -> new CsvLoader(CsvOptionFactory.createSudokuCsvOptionFrom(new CommandLineInput(fileName))).load())
                 .isInstanceOf(InvalidCsvFormatException.class)
                 .hasMessage(expectedMessage);
     }

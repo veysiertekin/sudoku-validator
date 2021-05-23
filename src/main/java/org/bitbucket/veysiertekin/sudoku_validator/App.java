@@ -2,6 +2,7 @@ package org.bitbucket.veysiertekin.sudoku_validator;
 
 import org.bitbucket.veysiertekin.sudoku_validator.cli.CommandLineParser;
 import org.bitbucket.veysiertekin.sudoku_validator.exception.SudokuRuntimeException;
+import org.bitbucket.veysiertekin.sudoku_validator.factory.CsvOptionFactory;
 import org.bitbucket.veysiertekin.sudoku_validator.file.CsvLoader;
 import org.bitbucket.veysiertekin.sudoku_validator.sudoku.SudokuSolver;
 import org.bitbucket.veysiertekin.sudoku_validator.utils.Logger;
@@ -23,7 +24,8 @@ public class App {
         var logger = Logger.getInstance();
         try {
             var options = new CommandLineParser(args).parse();
-            var data = new CsvLoader(options.fileName()).load();
+            var csvOptions = CsvOptionFactory.createSudokuCsvOptionFrom(options);
+            var data = new CsvLoader(csvOptions).load();
             var result = SudokuSolver.getInstance().solve(data);
             if (result.isPresent())
                 logger.info(ApplicationMessage.STATUS_VALID);
