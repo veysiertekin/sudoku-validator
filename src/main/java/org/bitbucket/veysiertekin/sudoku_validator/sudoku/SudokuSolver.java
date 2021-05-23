@@ -3,6 +3,7 @@ package org.bitbucket.veysiertekin.sudoku_validator.sudoku;
 import org.bitbucket.veysiertekin.sudoku_validator.ApplicationMessage;
 import org.bitbucket.veysiertekin.sudoku_validator.utils.ArrayUtils;
 import org.bitbucket.veysiertekin.sudoku_validator.utils.Logger;
+import org.bitbucket.veysiertekin.sudoku_validator.validation.ValidationHelper;
 
 import java.util.List;
 import java.util.Objects;
@@ -18,8 +19,24 @@ import static org.bitbucket.veysiertekin.sudoku_validator.CommonConstants.EMPTY_
  */
 public class SudokuSolver {
     private static final Logger logger = Logger.getInstance();
-    private final SudokuValidator sudokuValidator = new SudokuValidator();
-    private final SudokuBoardSerializer boardSerializer = new SudokuBoardSerializer();
+
+    private SudokuSolver() {
+    }
+
+    private static class Holder {
+        /**
+         * Lazy singleton instance
+         */
+        private static final SudokuSolver INSTANCE = new SudokuSolver();
+    }
+
+    public static SudokuSolver getInstance() {
+        return SudokuSolver.Holder.INSTANCE;
+    }
+
+    private final SudokuValidator sudokuValidator = SudokuValidator.getInstance();
+    private final ValidationHelper validationHelper = ValidationHelper.getInstance();
+    private final SudokuBoardSerializer boardSerializer = SudokuBoardSerializer.getInstance();
 
     private final List<Integer> possibleValues = IntStream.range(1, BOARD_DIMENSION + 1)
             .boxed().collect(Collectors.toList());
@@ -58,7 +75,7 @@ public class SudokuSolver {
                     continue;
 
                 for (var value : possibleValues) {
-                    if (canValueBeInsertedToEmptyIndex(input, value, rowIndex, columnIndex)) {
+                    if (validationHelper.canValueBeInsertedToEmptyIndex(input, value, rowIndex, columnIndex)) {
                         input[rowIndex][columnIndex] = value;
                         var result = solveValidInput(input);
                         if (result.isPresent()) {
@@ -84,38 +101,5 @@ public class SudokuSolver {
                 if (Objects.equals(data, EMPTY_FIELD))
                     return false;
         return true;
-    }
-
-    public boolean canValueBeInsertedToEmptyIndex(final Integer[][] input, final Integer value,
-                                                  final int rowIndex, final int columnIndex) {
-        var boxRow = calculateBoxIndex(rowIndex);
-        var boxColumn = calculateBoxIndex(columnIndex);
-
-        return !boxContains(input, value, boxRow, boxColumn)
-                && !rowContains(input, value, rowIndex)
-                && !columnContains(input, value, columnIndex);
-    }
-
-    private boolean rowContains(final Integer[][] input, Integer value, Integer rowIndex) {
-        return ArrayUtils.contains(input[rowIndex], value);
-    }
-
-    private boolean columnContains(Integer[][] input, Integer value, int columnIndex) {
-        for (Integer[] integers : input)
-            if (Objects.equals(integers[columnIndex], value))
-                return true;
-        return false;
-    }
-
-    private boolean boxContains(final Integer[][] input, Integer value, Integer rowIndex, Integer columnIndex) {
-        for (int row = rowIndex * 3; row < rowIndex * 3 + 3; row++)
-            for (int column = columnIndex * 3; column < columnIndex * 3 + 3; column++)
-                if (Objects.equals(input[row][column], value))
-                    return true;
-        return false;
-    }
-
-    private Integer calculateBoxIndex(int index) {
-        return index / 3;
     }
 }

@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class SudokuBoardSerializerTest {
     @Test
     void serializeBoard() {
-        var result = new SudokuBoardSerializer()
+        var result = SudokuBoardSerializer.getInstance()
                 .serializeAsString(CommonTestConstants.VALID_BOARD_RESULT);
         assertThat(result).isEqualTo("534|678|912\n" +
                 "672|195|348\n" +

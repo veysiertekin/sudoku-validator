@@ -11,11 +11,13 @@ import static org.bitbucket.veysiertekin.sudoku_validator.CommonConstants.BOARD_
  * Performs column validations on given Sudoku board
  */
 public class ColumnValidationCommand implements ValidationCommand {
+    private final ValidationHelper validationHelper = ValidationHelper.getInstance();
+
     @Override
     public boolean validate(Integer[][] input) {
         return IntStream.range(0, BOARD_DIMENSION)
                 .allMatch(columnIndex ->
-                        ValidationHelper.containsDistinctValues(
+                        validationHelper.containsDistinctValues(
                                 ValidationType.COLUMN,
                                 getWholeColumn(input, columnIndex)
                         ));

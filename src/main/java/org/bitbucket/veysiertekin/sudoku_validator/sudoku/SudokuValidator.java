@@ -11,12 +11,23 @@ import java.util.List;
 public class SudokuValidator {
     private final List<ValidationCommand> validators;
 
-    public SudokuValidator() {
-        validators = new ArrayList<>();
+    private SudokuValidator() {
+        this.validators = new ArrayList<>();
         this.validators.add(new InputSizeValidationCommand());
         this.validators.add(new RowValidationCommand());
         this.validators.add(new ColumnValidationCommand());
         this.validators.add(new BoxValidationCommand());
+    }
+
+    private static class Holder {
+        /**
+         * Lazy singleton instance
+         */
+        private static final SudokuValidator INSTANCE = new SudokuValidator();
+    }
+
+    public static SudokuValidator getInstance() {
+        return SudokuValidator.Holder.INSTANCE;
     }
 
     /**

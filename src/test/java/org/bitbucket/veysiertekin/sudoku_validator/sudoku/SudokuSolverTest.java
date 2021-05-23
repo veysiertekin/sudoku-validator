@@ -19,7 +19,7 @@ class SudokuSolverTest {
     @DisplayName("Given input, When it is valid, Then it should return true")
     @MethodSource("solverInputs")
     void solver(final Integer[][] input, final Optional<Integer[][]> expectedResult) {
-        Optional<Integer[][]> result = new SudokuSolver().solve(input);
+        Optional<Integer[][]> result = SudokuSolver.getInstance().solve(input);
         assertThat(result.isPresent()).isEqualTo(expectedResult.isPresent());
         if (result.isPresent() && expectedResult.isPresent()) {
             assertNested(result.get(), expectedResult.get());
@@ -75,43 +75,5 @@ class SudokuSolverTest {
                     .as("row: " + i)
                     .isEqualTo(expectedRows[i]);
         }
-    }
-
-    @ParameterizedTest
-    @DisplayName("Given index, When it can be added, Then it should return true")
-    @MethodSource("indexAvailabilityInputs")
-    void indexAvailability(final Integer[][] input, final Integer value, final Integer row,
-                           final Integer column, final Boolean expectedResult) {
-        boolean result = new SudokuSolver().canValueBeInsertedToEmptyIndex(input, value, row, column);
-        assertThat(result).isEqualTo(expectedResult);
-    }
-
-    Stream<Arguments> indexAvailabilityInputs() {
-        return Stream.of(
-                // Box contains
-                Arguments.of(new Integer[][]{
-                        new Integer[]{5, 3, null},
-                        new Integer[]{6, 7, 2},
-                        new Integer[]{1, 9, 8}
-                }, 3, 1, 1, false),
-                // Row contains
-                Arguments.of(new Integer[][]{
-                        new Integer[]{5, 3, 4, 6, 7, 8, 9, 1, null},
-                        new Integer[]{6, 7, 2, 1, 9, 5, 3, null, 8},
-                        new Integer[]{1, 9, 8, 3, 4, 2, null, 6, 7}
-                }, 3, 0, 8, false),
-                // Column contains
-                Arguments.of(new Integer[][]{
-                        new Integer[]{5, 3, 4, 6, null, 8, 9, 1, null},
-                        new Integer[]{6, 7, 2, 1, 9, 5, 3, null, 8},
-                        new Integer[]{1, 9, 8, 3, 4, 2, null, 6, 7}
-                }, 7, 0, 8, false),
-                // Valid input for the index
-                Arguments.of(new Integer[][]{
-                        new Integer[]{5, 3, 4, 6, null, 8, 9, 1, null},
-                        new Integer[]{6, 7, 2, 1, 9, 5, 3, null, 8},
-                        new Integer[]{1, 9, 8, 3, 4, 2, null, 6, 7}
-                }, 2, 0, 8, true)
-        );
     }
 }

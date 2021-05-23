@@ -10,12 +10,14 @@ import static org.bitbucket.veysiertekin.sudoku_validator.CommonConstants.BOARD_
  * Performs box validations on given Sudoku board
  */
 public class BoxValidationCommand implements ValidationCommand {
+    private final ValidationHelper helper = ValidationHelper.getInstance();
+
     @Override
     public boolean validate(Integer[][] input) {
         for (int rowIndex = 0; rowIndex < BOARD_DIMENSION / 3; rowIndex++) {
             for (int columnIndex = 0; columnIndex < BOARD_DIMENSION / 3; columnIndex++) {
                 var box = extractBox(input, rowIndex, columnIndex);
-                if (!ValidationHelper.containsDistinctValues(ValidationType.BOX, box))
+                if (!helper.containsDistinctValues(ValidationType.BOX, box))
                     return false;
             }
         }

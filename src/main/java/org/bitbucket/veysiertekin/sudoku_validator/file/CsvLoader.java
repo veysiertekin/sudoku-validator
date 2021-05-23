@@ -11,6 +11,9 @@ import java.util.stream.IntStream;
 import static org.bitbucket.veysiertekin.sudoku_validator.CommonConstants.BOARD_DIMENSION;
 import static org.bitbucket.veysiertekin.sudoku_validator.CommonConstants.EMPTY_FIELD;
 
+/**
+ * Handles csv loading process, accepts a filename and a row validation
+ */
 public class CsvLoader {
     private static final String EMPTY_STRING = "";
     private static final int DISABLED_THRESHOLD = -1;

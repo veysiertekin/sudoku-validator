@@ -1,6 +1,20 @@
 package org.bitbucket.veysiertekin.sudoku_validator.sudoku;
 
 public class SudokuBoardSerializer {
+    private SudokuBoardSerializer() {
+    }
+
+    private static class Holder {
+        /**
+         * Lazy singleton instance
+         */
+        private static final SudokuBoardSerializer INSTANCE = new SudokuBoardSerializer();
+    }
+
+    public static SudokuBoardSerializer getInstance() {
+        return SudokuBoardSerializer.Holder.INSTANCE;
+    }
+
     /**
      * Converts given board data to String
      *

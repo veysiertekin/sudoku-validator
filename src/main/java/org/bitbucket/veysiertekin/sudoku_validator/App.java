@@ -24,7 +24,7 @@ public class App {
         try {
             var options = new CommandLineParser(args).parse();
             var data = new CsvLoader(options.fileName()).load();
-            var result = new SudokuSolver().solve(data);
+            var result = SudokuSolver.getInstance().solve(data);
             if (result.isPresent())
                 logger.info(ApplicationMessage.STATUS_VALID);
             else

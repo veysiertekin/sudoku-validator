@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: org.bitbucket.veysiertekin.sudoku_validator.validation.InputSizeValidationCommandTest
--------------------------------------------------------------------------------
-Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.011 s - in org.bitbucket.veysiertekin.sudoku_validator.validation.InputSizeValidationCommandTest

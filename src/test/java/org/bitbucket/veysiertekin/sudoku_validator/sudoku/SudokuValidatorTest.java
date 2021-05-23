@@ -16,7 +16,7 @@ public class SudokuValidatorTest {
     @DisplayName("Given input, When it is valid, Then it should return true")
     @MethodSource("inputs")
     void checkInputFormat(final Integer[][] input, final Boolean expectedResult) {
-        final boolean result = new SudokuValidator().isBoardValid(input);
+        final boolean result = SudokuValidator.getInstance().isBoardValid(input);
         assertThat(result)
                 .isEqualTo(expectedResult);
     }
