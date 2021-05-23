@@ -95,14 +95,20 @@ public class ValidationHelper {
         final int boxRow = calculateBoxIndex(rowIndex);
         final int boxColumn = calculateBoxIndex(columnIndex);
 
-        for (int row = boxRow * 3; row < boxRow * 3 + 3; row++)
-            for (int column = boxColumn * 3; column < boxColumn * 3 + 3; column++)
+        for (int row = boxRow; row < boxRow + 3; row++)
+            for (int column = boxColumn; column < boxColumn + 3; column++)
                 if (Objects.equals(input[row][column], value))
                     return true;
         return false;
     }
 
+    /**
+     * Fits index to power of 3; cleans remainder of division 3
+     *
+     * @param index index to fit power of 3
+     * @return closest power of 3
+     */
     private Integer calculateBoxIndex(int index) {
-        return index / 3;
+        return (index / 3) * 3;
     }
 }
