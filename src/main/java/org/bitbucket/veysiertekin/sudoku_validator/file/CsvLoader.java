@@ -21,7 +21,7 @@ public class CsvLoader {
     private static final int DISABLED_THRESHOLD = -1;
 
     /**
-     * Desired line format: optional digits between 8 comma.
+     * Desired line format
      */
     private final Pattern linePattern;
     /**
