@@ -1,8 +1,7 @@
 package org.bitbucket.veysiertekin.sudoku_validator.validation;
 
 import org.bitbucket.veysiertekin.sudoku_validator.model.SudokuCell;
-
-import java.util.ArrayList;
+import org.bitbucket.veysiertekin.sudoku_validator.model.SudokuCells;
 
 import static org.bitbucket.veysiertekin.sudoku_validator.CommonConstants.BOARD_DIMENSION;
 
@@ -24,8 +23,8 @@ public class BoxValidationCommand implements ValidationCommand {
         return true;
     }
 
-    public ArrayList<SudokuCell> extractBox(final Integer[][] input, int rowIndex, int columnIndex) {
-        var result = new ArrayList<SudokuCell>(BOARD_DIMENSION);
+    public SudokuCells extractBox(final Integer[][] input, int rowIndex, int columnIndex) {
+        var result = new SudokuCells(BOARD_DIMENSION);
         for (int row = rowIndex * 3; row < rowIndex * 3 + 3; row++) {
             for (int column = columnIndex * 3; column < columnIndex * 3 + 3; column++) {
                 result.add(new SudokuCell(input[row][column], row, column));

@@ -2,13 +2,12 @@ package org.bitbucket.veysiertekin.sudoku_validator.validation;
 
 import org.bitbucket.veysiertekin.sudoku_validator.CommonTestConstants;
 import org.bitbucket.veysiertekin.sudoku_validator.model.SudokuCell;
+import org.bitbucket.veysiertekin.sudoku_validator.model.SudokuCells;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,7 +17,7 @@ class ValidationHelperTest {
     @ParameterizedTest
     @DisplayName("Given list, When it contains duplicates, Then it should return false")
     @MethodSource("inputs")
-    void checkInputFormat(final List<SudokuCell> input, final Boolean expectedResult) {
+    void checkInputFormat(final SudokuCells input, final Boolean expectedResult) {
         final boolean result = ValidationHelper.getInstance().containsDistinctValues(ValidationType.BOX, input);
         assertThat(result)
                 .isEqualTo(expectedResult);
@@ -71,8 +70,8 @@ class ValidationHelperTest {
         );
     }
 
-    private static Object convertToSudokuCells(Integer[] data) {
-        var result = new ArrayList<SudokuCell>(data.length);
+    private static SudokuCells convertToSudokuCells(Integer[] data) {
+        var result = new SudokuCells(data.length);
         for (int i = 0; i < data.length; i++) {
             result.add(new SudokuCell(data[i], 0, i));
         }

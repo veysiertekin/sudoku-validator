@@ -1,10 +1,10 @@
 package org.bitbucket.veysiertekin.sudoku_validator.validation;
 
 import org.bitbucket.veysiertekin.sudoku_validator.model.SudokuCell;
+import org.bitbucket.veysiertekin.sudoku_validator.model.SudokuCells;
 import org.bitbucket.veysiertekin.sudoku_validator.utils.ArrayUtils;
 import org.bitbucket.veysiertekin.sudoku_validator.utils.Logger;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -39,13 +39,13 @@ public class ValidationHelper {
      * @return {@code true} If non of the conflicted values detected, otherwise {@code false}
      * @see SudokuCell
      */
-    public boolean containsDistinctValues(final ValidationType validationType, final List<SudokuCell> group) {
-        final var result = group.stream()
+    public boolean containsDistinctValues(final ValidationType validationType, final SudokuCells cells) {
+        final var result = cells.stream()
                 .filter(cell -> !Objects.isNull(cell.data()))
                 .collect(Collectors.groupingBy(SudokuCell::data));
         return result.values().stream()
                 .filter(conflictedPoints -> conflictedPoints.size() > 1)
-                .peek(points -> logDuplicatedPoints(validationType, points))
+                .peek(points -> logDuplicatedPoints(validationType, new SudokuCells(points)))
                 .count() == 0;
     }
 
@@ -66,18 +66,14 @@ public class ValidationHelper {
                 && !columnContains(input, value, columnIndex);
     }
 
-    private void logDuplicatedPoints(final ValidationType validationType, List<SudokuCell> conflictedPoints) {
+    private void logDuplicatedPoints(final ValidationType validationType, SudokuCells conflictedPoints) {
         var data = getDataFromNonEmptyList(conflictedPoints);
-        var dataPoints = convertSudokuCellListToString(conflictedPoints);
+        var dataPoints = conflictedPoints.toLocationListString();
         logger.error(DUPLICATED_DATA_POINTS, validationType, data, dataPoints);
     }
 
-    private int getDataFromNonEmptyList(List<SudokuCell> conflictedPoints) {
+    private int getDataFromNonEmptyList(SudokuCells conflictedPoints) {
         return conflictedPoints.get(0).data();
-    }
-
-    private String convertSudokuCellListToString(List<SudokuCell> conflictedPoints) {
-        return conflictedPoints.stream().map(SudokuCell::locationAsString).collect(Collectors.joining(", "));
     }
 
     private boolean rowContains(final Integer[][] input, Integer value, Integer rowIndex) {
