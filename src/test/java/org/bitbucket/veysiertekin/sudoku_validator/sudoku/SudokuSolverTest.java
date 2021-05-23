@@ -1,6 +1,7 @@
 package org.bitbucket.veysiertekin.sudoku_validator.sudoku;
 
 import org.bitbucket.veysiertekin.sudoku_validator.CommonTestConstants;
+import org.bitbucket.veysiertekin.sudoku_validator.model.SudokuBoard;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,18 +19,18 @@ class SudokuSolverTest {
     @ParameterizedTest
     @DisplayName("Given input, When it is valid, Then it should return true")
     @MethodSource("solverInputs")
-    void solver(final Integer[][] input, final Optional<Integer[][]> expectedResult) {
-        Optional<Integer[][]> result = SudokuSolver.getInstance().solve(input);
+    void solver(final SudokuBoard input, final Optional<SudokuBoard> expectedResult) {
+        Optional<SudokuBoard> result = SudokuSolver.getInstance().solve(input);
         assertThat(result.isPresent()).isEqualTo(expectedResult.isPresent());
         if (result.isPresent() && expectedResult.isPresent()) {
-            assertNested(result.get(), expectedResult.get());
+            assertThat(result.get().toString()).isEqualTo(expectedResult.get().toString());
         }
     }
 
     Stream<Arguments> solverInputs() {
         return Stream.of(
                 // Invalid input; duplicated '3' at third box
-                Arguments.of(new Integer[][]{
+                Arguments.of(new SudokuBoard(new Integer[][]{
                         new Integer[]{5, 3, 4, 6, 7, 8, 9, 1, null},
                         new Integer[]{6, 7, 2, 1, 9, 5, 3, null, 8},
                         new Integer[]{1, 9, 8, 3, 4, 2, null, 3, 7},
@@ -39,9 +40,9 @@ class SudokuSolverTest {
                         new Integer[]{9, 6, null, 5, 3, 7, 2, 8, 4},
                         new Integer[]{2, null, 7, 4, 1, 9, 6, 3, 5},
                         new Integer[]{null, 4, 5, 2, 8, 6, 1, 7, 9}
-                }, Optional.empty()),
+                }), Optional.empty()),
                 // Valid input
-                Arguments.of(new Integer[][]{
+                Arguments.of(new SudokuBoard(new Integer[][]{
                         new Integer[]{5, 3, 4, 6, 7, 8, 9, 1, null},
                         new Integer[]{6, 7, 2, 1, 9, 5, 3, null, 8},
                         new Integer[]{1, 9, 8, 3, 4, 2, null, 6, 7},
@@ -51,10 +52,10 @@ class SudokuSolverTest {
                         new Integer[]{9, 6, null, 5, 3, 7, 2, 8, 4},
                         new Integer[]{2, null, 7, 4, 1, 9, 6, 3, 5},
                         new Integer[]{null, 4, 5, 2, 8, 6, 1, 7, 9}
-                }, Optional.of(CommonTestConstants.VALID_BOARD_RESULT)),
+                }), Optional.of(CommonTestConstants.VALID_BOARD_RESULT)),
                 // Visually valid but unsolvable puzzle
                 // this puzzle has been taken from: http://www.jibble.org/impossible-sudoku/
-                Arguments.of(new Integer[][]{
+                Arguments.of(new SudokuBoard(new Integer[][]{
                         new Integer[]{null, 7, null, null, null, 6, null, null, null},
                         new Integer[]{9, null, null, null, null, null, null, 4, 1},
                         new Integer[]{null, null, 8, null, null, 9, null, 5, null},
@@ -64,16 +65,8 @@ class SudokuSolverTest {
                         new Integer[]{null, 8, null, 3, null, null, 9, null, null},
                         new Integer[]{1, 6, null, null, null, null, null, null, 7},
                         new Integer[]{null, null, null, 5, null, null, null, 8, null}
-                }, Optional.empty()),
+                }), Optional.empty()),
                 Arguments.of(CommonTestConstants.VALID_BOARD_SAMPLE, Optional.of(CommonTestConstants.VALID_BOARD_RESULT))
         );
-    }
-
-    private void assertNested(final Integer[][] rows, final Integer[][] expectedRows) {
-        for (int i = 0; i < rows.length; i++) {
-            assertThat(rows[i])
-                    .as("row: " + i)
-                    .isEqualTo(expectedRows[i]);
-        }
     }
 }

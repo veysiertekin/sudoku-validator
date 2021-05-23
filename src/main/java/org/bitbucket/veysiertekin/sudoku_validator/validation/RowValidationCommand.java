@@ -1,6 +1,6 @@
 package org.bitbucket.veysiertekin.sudoku_validator.validation;
 
-import org.bitbucket.veysiertekin.sudoku_validator.model.SudokuCell;
+import org.bitbucket.veysiertekin.sudoku_validator.model.SudokuBoard;
 import org.bitbucket.veysiertekin.sudoku_validator.model.SudokuCells;
 
 import java.util.stream.IntStream;
@@ -14,7 +14,7 @@ public class RowValidationCommand implements ValidationCommand {
     private final ValidationHelper helper = ValidationHelper.getInstance();
 
     @Override
-    public boolean validate(Integer[][] input) {
+    public boolean validate(SudokuBoard input) {
         return IntStream.range(0, BOARD_DIMENSION)
                 .allMatch(rowIndex ->
                         helper.containsDistinctValues(
@@ -23,10 +23,10 @@ public class RowValidationCommand implements ValidationCommand {
                         ));
     }
 
-    public SudokuCells getWholeColumn(final Integer[][] input, final Integer rowIndex) {
+    public SudokuCells getWholeColumn(final SudokuBoard input, final Integer rowIndex) {
         var columnData = new SudokuCells(BOARD_DIMENSION);
-        for (int columnIndex = 0; columnIndex < input[0].length; columnIndex++) {
-            columnData.add(new SudokuCell(input[rowIndex][columnIndex], rowIndex, columnIndex));
+        for (int columnIndex = 0; columnIndex < BOARD_DIMENSION; columnIndex++) {
+            columnData.add(input.data(rowIndex, columnIndex));
         }
         return columnData;
     }

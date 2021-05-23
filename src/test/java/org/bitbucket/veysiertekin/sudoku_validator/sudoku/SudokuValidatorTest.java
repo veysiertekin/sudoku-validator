@@ -2,6 +2,7 @@ package org.bitbucket.veysiertekin.sudoku_validator.sudoku;
 
 
 import org.bitbucket.veysiertekin.sudoku_validator.CommonTestConstants;
+import org.bitbucket.veysiertekin.sudoku_validator.model.SudokuBoard;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -15,7 +16,7 @@ public class SudokuValidatorTest {
     @ParameterizedTest
     @DisplayName("Given input, When it is valid, Then it should return true")
     @MethodSource("inputs")
-    void checkInputFormat(final Integer[][] input, final Boolean expectedResult) {
+    void checkInputFormat(final SudokuBoard input, final Boolean expectedResult) {
         final boolean result = SudokuValidator.getInstance().isBoardValid(input);
         assertThat(result)
                 .isEqualTo(expectedResult);

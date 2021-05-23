@@ -2,6 +2,7 @@ package org.bitbucket.veysiertekin.sudoku_validator.validation;
 
 import org.bitbucket.veysiertekin.sudoku_validator.ApplicationMessage;
 import org.bitbucket.veysiertekin.sudoku_validator.file.CsvLoader;
+import org.bitbucket.veysiertekin.sudoku_validator.model.SudokuBoard;
 import org.bitbucket.veysiertekin.sudoku_validator.utils.Logger;
 
 import static org.bitbucket.veysiertekin.sudoku_validator.CommonConstants.BOARD_DIMENSION;
@@ -14,19 +15,15 @@ import static org.bitbucket.veysiertekin.sudoku_validator.CommonConstants.BOARD_
 public class InputSizeValidationCommand implements ValidationCommand {
     private static final Logger logger = Logger.getInstance();
 
-    public boolean validate(final Integer[][] input) {
+    public boolean validate(final SudokuBoard input) {
         return checkSize(input);
     }
 
-    private static boolean checkSize(final Integer[][] input) {
-        final var length = getInputLength(input);
-        final var result = length == BOARD_DIMENSION;
+    private static boolean checkSize(final SudokuBoard input) {
+        final var numberOfRows = input.numberOfRows();
+        final var result = numberOfRows == BOARD_DIMENSION;
         if (!result)
-            logger.error(ApplicationMessage.INVALID_BOARD_HEIGHT, length);
+            logger.error(ApplicationMessage.INVALID_BOARD_HEIGHT, numberOfRows);
         return result;
-    }
-
-    private static int getInputLength(Integer[][] input) {
-        return input == null ? 0 : input.length;
     }
 }

@@ -1,12 +1,10 @@
 package org.bitbucket.veysiertekin.sudoku_validator.sudoku;
 
 import org.bitbucket.veysiertekin.sudoku_validator.ApplicationMessage;
-import org.bitbucket.veysiertekin.sudoku_validator.utils.ArrayUtils;
+import org.bitbucket.veysiertekin.sudoku_validator.model.SudokuBoard;
 import org.bitbucket.veysiertekin.sudoku_validator.utils.Logger;
-import org.bitbucket.veysiertekin.sudoku_validator.validation.ValidationHelper;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -35,8 +33,6 @@ public class SudokuSolver {
     }
 
     private final SudokuValidator sudokuValidator = SudokuValidator.getInstance();
-    private final ValidationHelper validationHelper = ValidationHelper.getInstance();
-    private final SudokuBoardSerializer boardSerializer = SudokuBoardSerializer.getInstance();
 
     private final List<Integer> possibleValues = IntStream.range(1, BOARD_DIMENSION + 1)
             .boxed().collect(Collectors.toList());
@@ -50,38 +46,38 @@ public class SudokuSolver {
      * @param input given input
      * @return returns a possible solution if anything has been found, otherwise returns {@link Optional#empty()}
      */
-    public Optional<Integer[][]> solve(final Integer[][] input) {
+    public Optional<SudokuBoard> solve(final SudokuBoard input) {
         if (!sudokuValidator.isBoardValid(input)) {
             return Optional.empty();
         }
-        // Prevent side-effects by copying wrapper arrays
-        final var copy = ArrayUtils.copyWrapper(input);
+        // Prevent side-effects by copying wrapper objects
+        final var copy = input.makeCopy();
         final var result = solveValidInput(copy);
         if (result.isEmpty()) {
             logger.error(ApplicationMessage.UNSOLVABLE_PUZZLE);
         } else {
-            logger.info(ApplicationMessage.SOLUTION_HAS_BEEN_FOUND, boardSerializer.serializeAsString(result.get()));
+            logger.info(ApplicationMessage.SOLUTION_HAS_BEEN_FOUND, result.get().toString());
         }
         return result;
     }
 
-    private Optional<Integer[][]> solveValidInput(final Integer[][] input) {
-        if (boardCompleted(input)) {
+    private Optional<SudokuBoard> solveValidInput(final SudokuBoard input) {
+        if (input.isCompleted()) {
             return Optional.of(input);
         }
         for (int rowIndex = 0; rowIndex < BOARD_DIMENSION; rowIndex++) {
             for (int columnIndex = 0; columnIndex < BOARD_DIMENSION; columnIndex++) {
-                if (!Objects.equals(input[rowIndex][columnIndex], EMPTY_FIELD))
+                if (!input.data(rowIndex, columnIndex).contains(EMPTY_FIELD))
                     continue;
 
                 for (var value : possibleValues) {
-                    if (validationHelper.canValueBeInsertedToEmptyIndex(input, value, rowIndex, columnIndex)) {
-                        input[rowIndex][columnIndex] = value;
+                    if (input.indexAvailable(rowIndex, columnIndex, value)) {
+                        input.set(rowIndex, columnIndex, value);
                         var result = solveValidInput(input);
                         if (result.isPresent()) {
                             return result;
                         }
-                        input[rowIndex][columnIndex] = EMPTY_FIELD;
+                        input.set(rowIndex, columnIndex, EMPTY_FIELD);
                     }
                 }
                 // If an index is empty, but non of the possible
@@ -93,13 +89,5 @@ public class SudokuSolver {
          * It is impossible to get here because of the early exits in the function
          */
         return Optional.empty();
-    }
-
-    private boolean boardCompleted(final Integer[][] input) {
-        for (Integer[] row : input)
-            for (Integer data : row)
-                if (Objects.equals(data, EMPTY_FIELD))
-                    return false;
-        return true;
     }
 }

@@ -1,5 +1,6 @@
 package org.bitbucket.veysiertekin.sudoku_validator.sudoku;
 
+import org.bitbucket.veysiertekin.sudoku_validator.model.SudokuBoard;
 import org.bitbucket.veysiertekin.sudoku_validator.validation.*;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class SudokuValidator {
      * @param input Sudoku board to be checked
      * @return if given input visually valid returns {@code true}, otherwise {@code false}
      */
-    public boolean isBoardValid(final Integer[][] input) {
+    public boolean isBoardValid(final SudokuBoard input) {
         return validators.stream().allMatch(v -> v.validate(input));
     }
 }

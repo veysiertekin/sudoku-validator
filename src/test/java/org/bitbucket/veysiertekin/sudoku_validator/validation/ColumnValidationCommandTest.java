@@ -1,6 +1,7 @@
 package org.bitbucket.veysiertekin.sudoku_validator.validation;
 
 import org.bitbucket.veysiertekin.sudoku_validator.CommonTestConstants;
+import org.bitbucket.veysiertekin.sudoku_validator.model.SudokuBoard;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -15,7 +16,7 @@ class ColumnValidationCommandTest {
     @ParameterizedTest
     @DisplayName("Given sudoku board, When it abides by the column rules, Then it should return true")
     @MethodSource("inputs")
-    void checkInputFormat(final Integer[][] input, final Boolean expectedResult, String expectedLog) throws Exception {
+    void checkInputFormat(final SudokuBoard input, final Boolean expectedResult, String expectedLog) throws Exception {
         var errorLog = tapSystemErr(() -> {
             final boolean result = new ColumnValidationCommand().validate(input);
             assertThat(result).isEqualTo(expectedResult);
@@ -26,7 +27,7 @@ class ColumnValidationCommandTest {
     static Stream<Arguments> inputs() {
         return Stream.of(
                 // Repeated value
-                Arguments.of(new Integer[][]{
+                Arguments.of(new SudokuBoard(new Integer[][]{
                         new Integer[]{null},
                         new Integer[]{1},
                         new Integer[]{1},
@@ -36,7 +37,7 @@ class ColumnValidationCommandTest {
                         new Integer[]{5},
                         new Integer[]{6},
                         new Integer[]{7}
-                }, false, "Duplicated values have been found on same COLUMN. Duplicated value: 1, Conflicted data points (x,y): (1, 0), (2, 0)"),
+                }), false, "Duplicated values have been found on same COLUMN. Duplicated value: 1, Conflicted data points (x,y): (1, 0), (2, 0)"),
                 // Valid
                 Arguments.of(CommonTestConstants.VALID_BOARD_SAMPLE, true, "")
         );

@@ -1,5 +1,7 @@
 package org.bitbucket.veysiertekin.sudoku_validator.model;
 
+import java.util.Objects;
+
 public class SudokuCell {
     private final Integer data;
     private final int locationX;
@@ -13,6 +15,10 @@ public class SudokuCell {
 
     public Integer data() {
         return data;
+    }
+
+    public boolean contains(Integer value) {
+        return Objects.equals(data, value);
     }
 
     public String locationAsString() {
